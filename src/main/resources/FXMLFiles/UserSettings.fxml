@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="442.0" prefWidth="319.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Screens.UserSettingsController">
+   <children>
+      <Button fx:id="buttonChangePassword" layoutX="22.0" layoutY="401.0" mnemonicParsing="false" onAction="#actionChangePassword" text="Change password" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="22.0" />
+      <Button fx:id="buttonClose" layoutX="243.0" layoutY="401.0" mnemonicParsing="false" onAction="#actionClose" text="Close" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="23.0" />
+      <Label alignment="CENTER" layoutY="79.0" text="Phone:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0" />
+      <Label fx:id="nick" alignment="CENTER" layoutX="134.0" layoutY="14.0" prefHeight="17.0" prefWidth="70.0" text="Label" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0" />
+      <Label alignment="CENTER" layoutY="150.0" prefHeight="17.0" prefWidth="39.0" text="Email:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="140.0" />
+      <TextField fx:id="phone" alignment="CENTER" layoutX="76.0" layoutY="96.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="96.0" />
+      <TextField fx:id="email" alignment="CENTER" layoutX="76.0" layoutY="157.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="157.0" />
+      <Label alignment="CENTER" layoutY="213.0" text="Adress:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0" />
+      <TextField fx:id="adress" alignment="CENTER" layoutX="76.0" layoutY="217.0" AnchorPane.bottomAnchor="198.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" />
+      <Button fx:id="buttonSave" layoutX="130.0" layoutY="262.0" mnemonicParsing="false" onAction="#actionSave" text="Save" AnchorPane.bottomAnchor="153.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="130.0" />
+   </children>
+</AnchorPane>

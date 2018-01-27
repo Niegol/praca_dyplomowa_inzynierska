@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="851.0" prefWidth="1396.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.Screens.MainScreenController">
+   <top>
+      <AnchorPane prefHeight="27.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar prefHeight="32.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <tabs>
+                  <Tab fx:id="pavA" text="Pavilon A">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TabPane prefHeight="368.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <tabs>
+                                    <Tab fx:id="pAfloor0" text="0 floor">
+                                      <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <BorderPane layoutX="224.0" layoutY="135.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <bottom>
+                                                      <AnchorPane prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                         <children>
+                                                            <Button fx:id="buttonSavePA0" layoutX="315.0" layoutY="10.0" mnemonicParsing="false" onAction="#actionSave" text="Save" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
+                                                         </children></AnchorPane>
+                                                   </bottom>
+                                                   <center>
+                                                      <ScrollPane fx:id="scrollPane" fitToWidth="true" maxHeight="706.0" maxWidth="1083.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="1083.0" BorderPane.alignment="CENTER">
+                                                         <content>
+                                                            <GridPane fx:id="pavAfloor0" gridLinesVisible="true">
+                                                               <rowConstraints>
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                               </rowConstraints>
+                                                               <columnConstraints>
+                                                                  <ColumnConstraints />
+                                                               </columnConstraints>
+                                                            </GridPane>
+                                                         </content>
+                                                      </ScrollPane>
+                                                   </center>
+                                                </BorderPane>
+                                             </children></AnchorPane>
+                                      </content>
+                                    </Tab>
+                                    <Tab fx:id="pAfloor1" text="1 floor">
+                                      <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <BorderPane layoutX="143.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <center>
+                                                      <TableView fx:id="pavAfloor1" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                        <columns>
+                                                          <TableColumn prefWidth="75.0" text="C1" />
+                                                          <TableColumn prefWidth="75.0" text="C2" />
+                                                        </columns>
+                                                      </TableView>
+                                                   </center>
+                                                   <bottom>
+                                                      <AnchorPane prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                         <children>
+                                                            <Button fx:id="buttonSavePA1" layoutX="511.0" layoutY="12.0" mnemonicParsing="false" onAction="#actionSave" text="Save" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
+                                                         </children></AnchorPane>
+                                                   </bottom>
+                                                </BorderPane>
+                                             </children></AnchorPane>
+                                      </content>
+                                    </Tab>
+                                    <Tab fx:id="pAfloor2" text="2 floor">
+                                      <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <BorderPane layoutX="41.0" layoutY="48.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <center>
+                                                      <TableView fx:id="pavAfloor2" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                        <columns>
+                                                          <TableColumn prefWidth="75.0" text="C1" />
+                                                          <TableColumn prefWidth="75.0" text="C2" />
+                                                        </columns>
+                                                      </TableView>
+                                                   </center>
+                                                   <bottom>
+                                                      <AnchorPane prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                         <children>
+                                                            <Button fx:id="buttonSavePA2" layoutX="510.0" layoutY="12.0" mnemonicParsing="false" onAction="#actionSave" text="Save" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
+                                                         </children></AnchorPane>
+                                                   </bottom>
+                                                </BorderPane>
+                                             </children></AnchorPane>
+                                      </content>
+                                    </Tab>
+                                 </tabs>
+                              </TabPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="pavB" text="Pavilon B">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="600.0">
+                           <children>
+                              <TabPane layoutY="-1.0" prefHeight="604.0" prefWidth="831.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <tabs>
+                                    <Tab fx:id="pBfloor0" text="0 floor">
+                                      <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <BorderPane layoutX="118.0" layoutY="65.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <center>
+                                                      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                        <columns>
+                                                          <TableColumn prefWidth="75.0" text="C1" />
+                                                          <TableColumn prefWidth="75.0" text="C2" />
+                                                        </columns>
+                                                      </TableView>
+                                                   </center>
+                                                   <bottom>
+                                                      <AnchorPane prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                         <children>
+                                                            <Button fx:id="buttonSavePB0" layoutX="505.0" layoutY="12.0" mnemonicParsing="false" onAction="#actionSave" text="Save" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
+                                                         </children></AnchorPane>
+                                                   </bottom>
+                                                </BorderPane>
+                                             </children></AnchorPane>
+                                      </content>
+                                    </Tab>
+                                    <Tab fx:id="pBfloor1" text="1 floor">
+                                      <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <BorderPane layoutX="48.0" layoutY="27.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <center>
+                                                      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                        <columns>
+                                                          <TableColumn prefWidth="75.0" text="C1" />
+                                                          <TableColumn prefWidth="75.0" text="C2" />
+                                                        </columns>
+                                                      </TableView>
+                                                   </center>
+                                                   <bottom>
+                                                      <AnchorPane prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                         <children>
+                                                            <Button fx:id="buttonSavePB1" layoutX="493.0" layoutY="12.0" mnemonicParsing="false" onAction="#actionSave" text="Save" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
+                                                         </children></AnchorPane>
+                                                   </bottom>
+                                                </BorderPane>
+                                             </children></AnchorPane>
+                                      </content>
+                                    </Tab>
+                                    <Tab fx:id="pBfloor2" text="2 floor">
+                                      <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <BorderPane layoutX="163.0" layoutY="74.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <center>
+                                                      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                        <columns>
+                                                          <TableColumn prefWidth="75.0" text="C1" />
+                                                          <TableColumn prefWidth="75.0" text="C2" />
+                                                        </columns>
+                                                      </TableView>
+                                                   </center>
+                                                   <bottom>
+                                                      <AnchorPane prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                         <children>
+                                                            <Button fx:id="buttonSavePB2" layoutX="509.0" layoutY="1.0" mnemonicParsing="false" onAction="#actionSave" text="Save" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
+                                                         </children></AnchorPane>
+                                                   </bottom>
+                                                </BorderPane>
+                                             </children></AnchorPane>
+                                      </content>
+                                    </Tab>
+                                 </tabs>
+                              </TabPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="pavC" text="Pavilon C">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TabPane prefHeight="602.0" prefWidth="831.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <tabs>
+                                    <Tab fx:id="pCfloor0" text="0 floor">
+                                      <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <center>
+                                                      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                        <columns>
+                                                          <TableColumn prefWidth="75.0" text="C1" />
+                                                          <TableColumn prefWidth="75.0" text="C2" />
+                                                        </columns>
+                                                      </TableView>
+                                                   </center>
+                                                   <bottom>
+                                                      <AnchorPane prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                         <children>
+                                                            <Button fx:id="buttonSavePC0" layoutX="512.0" layoutY="12.0" mnemonicParsing="false" onAction="#actionSave" text="Save" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
+                                                         </children></AnchorPane>
+                                                   </bottom>
+                                                </BorderPane>
+                                             </children>
+                                          </AnchorPane>
+                                      </content>
+                                    </Tab>
+                                    <Tab fx:id="pCfloor1" text="1 floor">
+                                      <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <BorderPane layoutX="58.0" layoutY="40.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <center>
+                                                      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                        <columns>
+                                                          <TableColumn prefWidth="75.0" text="C1" />
+                                                          <TableColumn prefWidth="75.0" text="C2" />
+                                                        </columns>
+                                                      </TableView>
+                                                   </center>
+                                                   <bottom>
+                                                      <AnchorPane prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                         <children>
+                                                            <Button fx:id="buttonSavePC1" layoutX="494.0" layoutY="12.0" mnemonicParsing="false" onAction="#actionSave" text="Save" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
+                                                         </children></AnchorPane>
+                                                   </bottom>
+                                                </BorderPane>
+                                             </children>
+                                          </AnchorPane>
+                                      </content>
+                                    </Tab>
+                                 </tabs></TabPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="pavD" text="Pavilon D">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TabPane layoutY="-1.0" prefHeight="361.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <tabs>
+                                    <Tab fx:id="pDfloor0" text="0 floor">
+                                      <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <BorderPane layoutX="91.0" layoutY="55.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <center>
+                                                      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                        <columns>
+                                                          <TableColumn prefWidth="75.0" text="C1" />
+                                                          <TableColumn prefWidth="75.0" text="C2" />
+                                                        </columns>
+                                                      </TableView>
+                                                   </center>
+                                                   <bottom>
+                                                      <AnchorPane prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                         <children>
+                                                            <Button fx:id="buttonSavePD0" layoutX="508.0" layoutY="12.0" mnemonicParsing="false" onAction="#actionSave" text="Save" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
+                                                         </children></AnchorPane>
+                                                   </bottom>
+                                                </BorderPane>
+                                             </children>
+                                          </AnchorPane>
+                                      </content>
+                                    </Tab>
+                                    <Tab fx:id="pDfloor1" text="1 floor">
+                                      <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <BorderPane layoutX="63.0" layoutY="46.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <center>
+                                                      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                        <columns>
+                                                          <TableColumn prefWidth="75.0" text="C1" />
+                                                          <TableColumn prefWidth="75.0" text="C2" />
+                                                        </columns>
+                                                      </TableView>
+                                                   </center>
+                                                   <bottom>
+                                                      <AnchorPane prefHeight="50.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                         <children>
+                                                            <Button fx:id="buttonSavePD1" layoutX="483.0" layoutY="1.0" mnemonicParsing="false" onAction="#actionSave" text="Save" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
+                                                         </children></AnchorPane>
+                                                   </bottom>
+                                                </BorderPane>
+                                             </children>
+                                          </AnchorPane>
+                                      </content>
+                                    </Tab>
+                                 </tabs></TabPane>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+         </children>
+      </AnchorPane>
+   </center>
+   <left>
+      <AnchorPane prefHeight="613.0" prefWidth="128.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" layoutX="7.0" layoutY="219.0" text="Show form date:" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="219.0" />
+            <Button fx:id="showButton" layoutX="28.0" layoutY="328.0" mnemonicParsing="false" onAction="#showAction" prefHeight="27.0" prefWidth="71.0" text="Search" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="328.0" />
+            <Label alignment="CENTER" layoutX="5.0" layoutY="263.0" text="To date:" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="263.0" />
+            <DatePicker fx:id="checkInDatePicker" layoutX="10.0" layoutY="236.0" prefHeight="27.0" prefWidth="145.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="236.0" />
+            <DatePicker fx:id="checkOutDatePicker" layoutX="10.0" layoutY="280.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="280.0" />
+            <Button fx:id="closeButton" layoutX="4.0" layoutY="567.0" mnemonicParsing="false" onAction="#closeAction" prefHeight="94.0" prefWidth="127.0" text="Close!" textFill="RED" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0">
+               <effect>
+                  <ColorAdjust brightness="-0.32" />
+               </effect>
+               <font>
+                  <Font name="System Italic" size="25.0" />
+               </font></Button>
+            <Button fx:id="logoutButton" layoutY="117.0" mnemonicParsing="false" onAction="#logoutAction" prefHeight="27.0" prefWidth="128.0" text="Log out" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="117.0">
+               <effect>
+                  <ColorAdjust brightness="-0.32" contrast="0.02" />
+               </effect>
+            </Button>
+            <Label fx:id="labelUser" alignment="CENTER" layoutX="37.0" layoutY="26.0" prefHeight="17.0" prefWidth="77.0" text="label" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="26.0" />
+            <Label layoutX="9.0" layoutY="6.0" text="Welcome:" />
+            <Button fx:id="buttonSettings" layoutX="30.0" layoutY="72.0" mnemonicParsing="false" onAction="#actionSettings" text="Your settings" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="72.0" />
+            <Button fx:id="reservationsButton" layoutX="5.0" layoutY="456.0" mnemonicParsing="false" onAction="#showReservationsAction" prefHeight="55.0" prefWidth="118.0" text="Reservations" AnchorPane.bottomAnchor="311.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" />
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="613.0" prefWidth="184.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" layoutX="58.0" layoutY="14.0" text="Customer" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="14.0" />
+            <TextField fx:id="name" alignment="CENTER" editable="false" layoutY="85.0" promptText="name" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0" />
+            <TextField fx:id="surname" alignment="CENTER" editable="false" layoutY="129.0" promptText="surname" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="129.0" />
+            <TextField fx:id="phone" alignment="CENTER" editable="false" layoutY="261.0" promptText="phone" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="261.0" />
+            <TextField fx:id="nip" alignment="CENTER" editable="false" layoutY="217.0" promptText="NIP" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="217.0" />
+            <TextField fx:id="companyName" alignment="CENTER" editable="false" layoutY="173.0" promptText="Company" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="173.0" />
+            <TextField fx:id="email" alignment="CENTER" editable="false" layoutY="305.0" promptText="email adress" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="305.0" />
+            <Button fx:id="buttonEditCustomer" layoutX="9.0" layoutY="355.0" mnemonicParsing="false" onAction="#actionShowAll" prefHeight="67.0" prefWidth="165.0" text="Show all customers" AnchorPane.bottomAnchor="400.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="10.0" />
+            <ComboBox fx:id="customersBox" layoutX="8.0" layoutY="31.0" onAction="#actionSetTextFields" onMouseClicked="#onMouseClicked" prefWidth="150.0" promptText="Select Customer" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="31.0" />
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>
