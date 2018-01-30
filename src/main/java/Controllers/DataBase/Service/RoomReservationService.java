@@ -3,10 +3,8 @@ package Controllers.DataBase.Service;
 import Controllers.DataBase.Converters.RoomReservationConverter;
 import Controllers.DataBase.FXModels.RoomReservationFX;
 import Controllers.DataBase.dao.RoomReservationDao;
-import Controllers.DataBase.dbutilies.DbMenager;
+import Controllers.DataBase.dbutilies.DbManager;
 import Controllers.DataBase.models.RoomReservation;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -27,27 +25,27 @@ public class RoomReservationService {
            this.stringDatesObservableList.add(date);
         }
 
-        RoomReservationDao roomReservationDao = new RoomReservationDao(DbMenager.getConnectionSource());
+        RoomReservationDao roomReservationDao = new RoomReservationDao(DbManager.getConnectionSource());
         List<RoomReservation> roomReservations = roomReservationDao.informationsAboutReservations(low,high);
         this.roomReservationFXObservableList.clear();
         roomReservations.forEach(roomReservation ->{
             RoomReservationFX roomReservationFX = RoomReservationConverter.convertToRoomReservationFX(roomReservation);
             this.roomReservationFXObservableList.add(roomReservationFX);
         });
-        DbMenager.closeConnectionSource();
+        DbManager.closeConnectionSource();
     }
 
     public void saveInDB(RoomReservation roomReservation){
-        RoomReservationDao roomReservationDao = new RoomReservationDao(DbMenager.getConnectionSource());
+        RoomReservationDao roomReservationDao = new RoomReservationDao(DbManager.getConnectionSource());
         roomReservationDao.createOrUpdate(roomReservation);
-        DbMenager.closeConnectionSource();
+        DbManager.closeConnectionSource();
     }
 
 //    public boolean isReserved(LocalDate low, LocalDate high, int id){
 //        boolean bool;
-//        RoomReservationDao roomReservationDao = new RoomReservationDao(DbMenager.getConnectionSource());
+//        RoomReservationDao roomReservationDao = new RoomReservationDao(DbManager.getConnectionSource());
 //        bool = roomReservationDao.isReserved(low,high,id);
-//        DbMenager.closeConnectionSource();
+//        DbManager.closeConnectionSource();
 //        return bool;
 //    }
 

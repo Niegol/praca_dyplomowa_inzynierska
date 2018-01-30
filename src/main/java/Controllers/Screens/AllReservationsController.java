@@ -292,7 +292,7 @@ public class AllReservationsController {
         LocalDate lowAdd = DateAndStringConverter.stringToLocalDate(this.reservationService.getReservation().getArrivalDate());
         LocalDate highAdd = DateAndStringConverter.stringToLocalDate(this.reservationService.getReservation().getDepartureDate());
 
-        System.out.println(lowAdd + " " + highAdd);
+
         this.roomReservationService = new RoomReservationService();
 
         this.roomReservationService.init(lowAdd, highAdd);
@@ -304,27 +304,40 @@ public class AllReservationsController {
         if(this.reservationService.getReservationFXSelectedRooms().isEmpty()){
             DialogsUtils.errorDialog("You have to select room/rooms to add reservation!");
         }else {
-            List<Boolean> booleans = new ArrayList<>();
-            int falses =0;
-            for(RoomReservationFX room : this.roomReservationService.getRoomReservationFXObservableList()){
+            int falses = 0;
+            DialogsUtils.communicat(String.valueOf(this.roomReservationService.getRoomReservationFXObservableList().size()));
+            for(RoomFX roomFX : this.reservationService.getReservationFXSelectedRooms()){
                 for(RoomReservationFX roomResFX : this.roomReservationService.getRoomReservationFXObservableList()){
                     LocalDate arrivalDate = DateAndStringConverter.stringToLocalDate(roomResFX.getReservationFX().getArrivalDate().toString());
-                    LocalDate departureDate = DateAndStringConverter.stringToLocalDate(roomResFX.getReservationFX().getArrivalDate().toString());
+                    LocalDate departureDate = DateAndStringConverter.stringToLocalDate(roomResFX.getReservationFX().getDepartureDate().toString());
 
-                    if((lowAdd.isBefore(arrivalDate) & (highAdd.isBefore(arrivalDate) | highAdd.isEqual(arrivalDate)))|
-                            (highAdd.isAfter(departureDate) & (lowAdd.isAfter(departureDate) | lowAdd.isEqual(departureDate))))
-                        booleans.add(true);
 
-                    else {
-                        booleans.add(false);
-                        ++falses;
+//                    DialogsUtils.communicat(lowAdd + " ... " + highAdd
+//                            +"\n" +arrivalDate + " ... " + departureDate );
+
+                    if (roomFX.getId() == roomResFX.getRoomFX().getId()) {
+                        if ((lowAdd.isBefore(arrivalDate) & (highAdd.isBefore(arrivalDate) | highAdd.isEqual(arrivalDate))) |
+                                (highAdd.isAfter(departureDate) & (lowAdd.isAfter(departureDate) | lowAdd.isEqual(departureDate)))) {
+
+                        } else {
+                            falses = falses + 1;
+                        }
+                    } else{
+                        if(lowAdd.isBefore(highAdd)) {
+
+                        } else{
+                            falses = falses + 1;
+                        }
+
                     }
                 }
+
             }
-            if(falses != 0) {
-                DialogsUtils.errorDialog("In this time there is room booked!");
-            }
-            else {
+            if(falses > 0) {
+               DialogsUtils.errorDialog("In this time there is room booked!");
+
+            } else {
+                DialogsUtils.communicat(String.valueOf(falses));
                 this.reservationService.saveInDB();
                 this.reservationService.init();
                 this.reservationService.getReservationFXSelectedRooms().forEach(e -> {
@@ -334,7 +347,6 @@ public class AllReservationsController {
                     RoomReservationService roomReservationService = new RoomReservationService();
                     roomReservationService.saveInDB(roomReservation);
                 });
-
             }
 
 

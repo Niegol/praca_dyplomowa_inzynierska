@@ -10,29 +10,16 @@ import Controllers.DataBase.Service.CustomerService;
 import Controllers.DataBase.Service.RoomReservationService;
 import Controllers.DataBase.Service.RoomService;
 import Controllers.DataBase.Service.UserService;
-import Controllers.DataBase.dao.RoomReservationDao;
-import Controllers.DataBase.dbutilies.DbMenager;
-import Controllers.DataBase.models.RoomReservation;
-import javafx.beans.property.StringProperty;
-import javafx.event.EventHandler;
+import Controllers.DataBase.dbutilies.DbManager;
 import javafx.fxml.FXML;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
-import java.util.*;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class MainScreenController{
     private static final String pathToLoginScreen = "/FXMLFiles/LoginScreen.fxml";
@@ -217,7 +204,7 @@ public class MainScreenController{
                 LocalDate high = this.checkOutDatePicker.getValue();
                 this.roomReservationService.init(low,high);
                 this.getAllRoomsForTableViev(low,high);
-                DbMenager.closeConnectionSource();
+                DbManager.closeConnectionSource();
             } else
                 DialogsUtils.communicat("zla data");
         }else

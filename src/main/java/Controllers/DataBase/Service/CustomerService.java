@@ -4,7 +4,7 @@ import Classes.dialogs.DialogsUtils;
 import Controllers.DataBase.Converters.CustomerConverter;
 import Controllers.DataBase.FXModels.CustomerFX;
 import Controllers.DataBase.dao.CustomerDao;
-import Controllers.DataBase.dbutilies.DbMenager;
+import Controllers.DataBase.dbutilies.DbManager;
 import Controllers.DataBase.models.Customer;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -21,22 +21,22 @@ public class CustomerService{
 
 
     public static List<Customer> getCustomersList(){
-        CustomerDao customerDao = new CustomerDao(DbMenager.getConnectionSource());
+        CustomerDao customerDao = new CustomerDao(DbManager.getConnectionSource());
         List<Customer> arrayList = customerDao.getCustomersList();
-        DbMenager.closeConnectionSource();
+        DbManager.closeConnectionSource();
         return arrayList;
     }
 
     // initialize list of cutomers in combobox in mainscreen
     public void init(){
-        CustomerDao customerDao = new CustomerDao(DbMenager.getConnectionSource());
+        CustomerDao customerDao = new CustomerDao(DbManager.getConnectionSource());
         List<Customer> customers = customerDao.queryForAll(Customer.class);
         this.customerList.clear();
         customers.forEach(customer ->{
             CustomerFX customerFX = CustomerConverter.conertToCustomerFX(customer);
             this.customerList.add(customerFX);
         });
-        DbMenager.closeConnectionSource();
+        DbManager.closeConnectionSource();
     }
 
     public void saveInDB() {
@@ -63,17 +63,17 @@ public class CustomerService{
     }
 
     public void saveOrUpdate(CustomerFX customerFX) {
-            CustomerDao customerDao = new CustomerDao(DbMenager.getConnectionSource());
+            CustomerDao customerDao = new CustomerDao(DbManager.getConnectionSource());
             Customer customerSave = CustomerConverter.convertToCustomer(customerFX);
             customerDao.createOrUpdate(customerSave);
-            DbMenager.closeConnectionSource();
+            DbManager.closeConnectionSource();
             this.init();
     }
 
     public void deleteInDB(){
-        CustomerDao customerDao = new CustomerDao(DbMenager.getConnectionSource());
+        CustomerDao customerDao = new CustomerDao(DbManager.getConnectionSource());
         customerDao.deleteById(Customer.class, this.getCustomerEdit().getId());
-        DbMenager.closeConnectionSource();
+        DbManager.closeConnectionSource();
         this.init();
     }
 

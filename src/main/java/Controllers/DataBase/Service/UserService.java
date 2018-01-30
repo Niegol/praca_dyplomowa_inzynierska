@@ -4,7 +4,7 @@ import Classes.dialogs.DialogsUtils;
 import Controllers.DataBase.Converters.UserConverter;
 import Controllers.DataBase.FXModels.UserFX;
 import Controllers.DataBase.dao.UserDao;
-import Controllers.DataBase.dbutilies.DbMenager;
+import Controllers.DataBase.dbutilies.DbManager;
 import Controllers.DataBase.models.User;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -17,42 +17,42 @@ public class UserService{
 
 
     public Boolean logIn(String log, String pass){
-        UserDao userDao = new UserDao(DbMenager.getConnectionSource());
+        UserDao userDao = new UserDao(DbManager.getConnectionSource());
         List<User> result = userDao.getAcess(log,pass);
         if (result.isEmpty()==false){
             User user = result.get(0);
             user.setLoggedIn(true);
             userDao.update(user);
             userDao.refresh(user);
-            DbMenager.closeConnectionSource();
+            DbManager.closeConnectionSource();
             return true;
         }else {
-            DbMenager.closeConnectionSource();
+            DbManager.closeConnectionSource();
             return false;
         }
     }
 
     public void logOut(){
-        UserDao userDao = new UserDao(DbMenager.getConnectionSource());
+        UserDao userDao = new UserDao(DbManager.getConnectionSource());
         List<User> result = userDao.whoIsLoggedIn();
         User user = result.get(0);
         user.setLoggedIn(false);
         userDao.update(user);
-        DbMenager.closeConnectionSource();
+        DbManager.closeConnectionSource();
     }
 
     public String getUserNick(){
-        UserDao userDao = new UserDao(DbMenager.getConnectionSource());
+        UserDao userDao = new UserDao(DbManager.getConnectionSource());
         List<User> list = userDao.whoIsLoggedIn();
         String nick = userDao.nick(list);
-        DbMenager.closeConnectionSource();
+        DbManager.closeConnectionSource();
         return nick;
     }
 
     public User getLoggedUser(){
-        UserDao userDao = new UserDao(DbMenager.getConnectionSource());
+        UserDao userDao = new UserDao(DbManager.getConnectionSource());
         User user = userDao.whoIsLoggedIn().get(0);
-        DbMenager.closeConnectionSource();
+        DbManager.closeConnectionSource();
         return user;
     }
 
@@ -63,9 +63,9 @@ public class UserService{
 
     public boolean isAdmin(){
         boolean isAdmin;
-        UserDao userDao = new UserDao(DbMenager.getConnectionSource());
+        UserDao userDao = new UserDao(DbManager.getConnectionSource());
         isAdmin = userDao.isLoggedAdmin(userDao.whoIsLoggedIn());
-        DbMenager.closeConnectionSource();
+        DbManager.closeConnectionSource();
         return isAdmin;
     }
 
@@ -74,7 +74,7 @@ public class UserService{
             if (!phone.isEmpty() && !email.isEmpty() && !adress.isEmpty()) {
                 Boolean change = false;
                 int number = Integer.parseInt(phone);
-                UserDao userDao = new UserDao(DbMenager.getConnectionSource());
+                UserDao userDao = new UserDao(DbManager.getConnectionSource());
                 User user = userDao.whoIsLoggedIn().get(0);
                 if (number != user.getPhone()) {
                     user.setPhone(number);
@@ -95,7 +95,7 @@ public class UserService{
                 }else
                     DialogsUtils.communicat("No changes or wrong email format!");
 
-                DbMenager.closeConnectionSource();
+                DbManager.closeConnectionSource();
             }else
                 DialogsUtils.communicat("Some field is empty!");
 
@@ -112,10 +112,10 @@ public class UserService{
     }
 
     public void saveOrUpdate(UserFX userFX){
-        UserDao userDao = new UserDao(DbMenager.getConnectionSource());
+        UserDao userDao = new UserDao(DbManager.getConnectionSource());
         User user = UserConverter.convertToUser(userFX);
         userDao.createOrUpdate(user);
-        DbMenager.closeConnectionSource();
+        DbManager.closeConnectionSource();
     }
 
     public UserFX getUserFXObjectProperty() {

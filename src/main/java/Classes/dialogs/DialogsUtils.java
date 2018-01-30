@@ -1,9 +1,6 @@
 package Classes.dialogs;
 
-import Classes.FileOperations;
 import Controllers.DataBase.Service.UserService;
-import Controllers.DataBase.dao.UserDao;
-import Controllers.DataBase.dbutilies.DbMenager;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;

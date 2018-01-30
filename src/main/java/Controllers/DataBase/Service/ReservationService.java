@@ -6,11 +6,10 @@ import Controllers.DataBase.Converters.ReservationConverter;
 import Controllers.DataBase.FXModels.ReservationFX;
 import Controllers.DataBase.FXModels.RoomFX;
 import Controllers.DataBase.dao.ReservationDao;
-import Controllers.DataBase.dbutilies.DbMenager;
+import Controllers.DataBase.dbutilies.DbManager;
 import Controllers.DataBase.models.Reservation;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableBooleanValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -24,7 +23,7 @@ public class ReservationService {
     private ObjectProperty<ReservationFX> reservationEdit = new SimpleObjectProperty<>();
 
     public void init(){
-        ReservationDao reservationDao = new ReservationDao(DbMenager.getConnectionSource());
+        ReservationDao reservationDao = new ReservationDao(DbManager.getConnectionSource());
         List<Reservation> reservations = reservationDao.queryForAll(Reservation.class);
         this.reservationFXObservableList.clear();
         reservations.forEach(reservation->{
@@ -32,7 +31,7 @@ public class ReservationService {
             this.reservationFXObservableList.add(reservationFX);
         });
 
-        DbMenager.closeConnectionSource();
+        DbManager.closeConnectionSource();
     }
 
     public void addSelectedRoom(RoomFX roomFX){
@@ -93,10 +92,10 @@ public class ReservationService {
     }
 
     public void saveOrUpdate(ReservationFX reservationFX){
-        ReservationDao reservationDao = new ReservationDao(DbMenager.getConnectionSource());
+        ReservationDao reservationDao = new ReservationDao(DbManager.getConnectionSource());
         Reservation reservationSave = ReservationConverter.convertToReservation(reservationFX);
         reservationDao.createOrUpdate(reservationSave);
-        DbMenager.closeConnectionSource();
+        DbManager.closeConnectionSource();
     }
 
     public ObservableList<ReservationFX> getReservationFXObservableList() {

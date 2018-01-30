@@ -15,8 +15,8 @@ import java.util.List;
 public abstract class CommonDao {
     protected final ConnectionSource connectionSource;
 
-    public CommonDao(ConnectionSource connectionSource){
-        this.connectionSource = connectionSource;
+    public CommonDao(ConnectionSource cs){
+        this.connectionSource = cs;
     }
 
     public <T extends BaseModel, I> Dao<T, I> getDao(Class<T> cls){
@@ -27,8 +27,6 @@ public abstract class CommonDao {
         }
         return null;
     }
-
-
 
     public <T extends BaseModel, I> void createOrUpdate(BaseModel baseModel){
         try {
@@ -66,17 +64,6 @@ public abstract class CommonDao {
         } catch (SQLException e) {
             DialogsUtils.errorDialog(e.getMessage());
         }
-    }
-
-    public <T extends  BaseModel, I> void queryForAll(BaseModel baseModel){
-        try {
-            Dao<T, I> dao = getDao((Class<T>) baseModel.getClass());
-            dao.queryForAll();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
     }
 
     public <T extends BaseModel, I> void delete(BaseModel baseModel){

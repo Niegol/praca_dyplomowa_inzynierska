@@ -4,6 +4,7 @@ import Classes.dialogs.DialogsUtils;
 import Controllers.DataBase.models.*;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.support.ConnectionSource;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -20,13 +21,39 @@ public class RoomReservationDao extends CommonDao{
         List<RoomReservation> roomReservations = new ArrayList<>();
         try {
             QueryBuilder<RoomReservation, Integer> roomReservationQB = getQueryBuilder(RoomReservation.class);
+
+
+ //           Where<RoomReservation, Integer> roomReservationWh = roomReservationQB.where();
+
             QueryBuilder<Room, Integer> roomQB = getQueryBuilder(Room.class);
             roomQB.where().eq("floor", 0).and().eq("pavilon", "A");
             QueryBuilder<Customer, Integer> customerQB = getQueryBuilder(Customer.class);
             QueryBuilder<Reservation, Integer> reservationQB = getQueryBuilder(Reservation.class);
+            QueryBuilder<Reservation, Integer> reservationAr = getQueryBuilder(Reservation.class);
+            QueryBuilder<Reservation, Integer> reservationDp = getQueryBuilder(Reservation.class);
+
+//            Where<Reservation, Integer> reservationWh = reservationQB.where();
+//            reservationWh.le("arrival_date", low);
+//            reservationWh.ge("departure_date", low);
+//            reservationWh.and(2);
+
+
+
+            reservationAr.where().le("arrival_date", low).and().ge("departure_date", low);
+            reservationDp.where().le("arrival_date", high).and().ge("departure_date", high);
 
             reservationQB.where().between("arrival_date", low, high)
-                    .or().between("departure_date", low, high);
+                    .or().between("departure_date", low, high)
+                    .or().le("arrival_date", low).or().ge("departure_date", low)
+                    .or().le("arrival_date", high).or().ge("departure_date", high);
+
+//            reservationQB.where().le("arrival_date", low).and().ge("departure_date", low);
+//            reservationQB.where().le("arrival_date", high).and().ge("departure_date", high);
+//
+//            reservationQB.join(reservationAr);
+//            reservationQB.join(reservationDp);
+
+
 
             reservationQB.join(customerQB);
             roomReservationQB.join(roomQB).join(reservationQB);
