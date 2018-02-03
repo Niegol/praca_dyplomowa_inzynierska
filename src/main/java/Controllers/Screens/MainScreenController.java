@@ -11,6 +11,7 @@ import Controllers.DataBase.Service.RoomReservationService;
 import Controllers.DataBase.Service.RoomService;
 import Controllers.DataBase.Service.UserService;
 import Controllers.DataBase.dbutilies.DbManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -26,17 +27,20 @@ public class MainScreenController{
     private static final String pathToUserSettings = "/FXMLFiles/UserSettings.fxml";
     private static final String pathToAllCustomersScreen = "/FXMLFiles/AllCustomers.fxml";
     private static final String pathToAllReservationsScreen = "/FXMLFiles/AllReservations.fxml";
+    private static final String pathToDeletedReservations = "/FXMLFiles/DeletedReservations.fxml";
 
     private static final String titleOfLoginScreen = "Login Screen";
     private static final String titleOfUserSettings = "User Settings";
     private static final String titleOfAllCustomersScreen = "All Customer";
     private static final String getTitleOfAllReservationsScreen = "All reservations";
+    private static final String titleOfDeletedReservations = "History Of Reservations";
 
 
     private static final Boolean resizableEditUserScreen = false;
     private static final Boolean resizableUserSettings = false;
     private static final Boolean resizableAllCustomersScreen = false;
     private static final Boolean resizableAllReservationsScreen = false;
+    private static final Boolean resizableDeletedReservations = false;
 
 
     @FXML
@@ -105,8 +109,6 @@ public class MainScreenController{
     @FXML
     private Button reservationsButton;
 
-    @FXML
-    private Button buttonSavePA0;
 
     @FXML
     private Button buttonSavePA1;
@@ -142,7 +144,10 @@ public class MainScreenController{
     private Button buttonEditCustomer;
 
     @FXML
-    private Button buttonAddNewCustomer;
+    private Button showCustomer;
+
+    @FXML
+    private Button showHistoryButton;
 
     @FXML
     private ComboBox<CustomerFX> customersBox;
@@ -269,6 +274,9 @@ public class MainScreenController{
     public void initialize() {
         UserService userService = new UserService();
         labelUser.setText(userService.getUserNick());
+
+        if(!userService.isAdmin())
+            this.showHistoryButton.setDisable(true);
 
         this.roomReservationService = new RoomReservationService();
         this.getAllRoomsForTableViev(LocalDate.now(),LocalDate.now().plusDays(10));
@@ -427,5 +435,7 @@ public class MainScreenController{
     }
 
 
-
+    public void showHistoryAction() {
+        ScreenShowBorderPane borderPan = new ScreenShowBorderPane(pathToDeletedReservations, titleOfDeletedReservations, resizableDeletedReservations);
+    }
 }

@@ -9,13 +9,13 @@ public class Reservation implements BaseModel {
     }
 
     @DatabaseField(columnName = "id_reservation", generatedId = true)
-    private int idResevation;
+    private int idReservation;
 
     @DatabaseField(columnName = "id_customer", foreign = true, foreignAutoRefresh = true, canBeNull = false)
     private Customer customer;
 
     @DatabaseField(columnName = "amount_of_people", canBeNull = false)
-    private int ampuntOfPeople;
+    private int amountOfPeople;
 
     @DatabaseField(columnName = "arrival_date", canBeNull = false, format = "yyyy-MM-dd")
     private String arrivalDate;
@@ -41,12 +41,12 @@ public class Reservation implements BaseModel {
     @DatabaseField(columnName = "comment")
     private String comment;
 
-    public int getIdResevation() {
-        return idResevation;
+    public int getIdReservation() {
+        return idReservation;
     }
 
-    public void setIdResevation(int idResevation) {
-        this.idResevation = idResevation;
+    public void setIdReservation(int idReservation) {
+        this.idReservation = idReservation;
     }
 
     public Customer getCustomer() {
@@ -57,12 +57,12 @@ public class Reservation implements BaseModel {
         this.customer = customer;
     }
 
-    public int getAmpuntOfPeople() {
-        return ampuntOfPeople;
+    public int getAmountOfPeople() {
+        return amountOfPeople;
     }
 
-    public void setAmpuntOfPeople(int ampuntOfPeople) {
-        this.ampuntOfPeople = ampuntOfPeople;
+    public void setAmountOfPeople(int amountOfPeople) {
+        this.amountOfPeople = amountOfPeople;
     }
 
     public String getArrivalDate() {
@@ -132,9 +132,9 @@ public class Reservation implements BaseModel {
     @Override
     public String toString() {
         return "Reservation{" +
-                "idResevation=" + idResevation +
+                "idReservation=" + idReservation +
                 ", customer=" + customer +
-                ", ampuntOfPeople=" + ampuntOfPeople +
+                ", amountOfPeople=" + amountOfPeople +
                 ", arrivalDate='" + arrivalDate + '\'' +
                 ", departureDate='" + departureDate + '\'' +
                 ", startingMeal='" + startingMeal + '\'' +

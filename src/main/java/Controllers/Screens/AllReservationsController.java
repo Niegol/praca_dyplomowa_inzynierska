@@ -1,5 +1,6 @@
 package Controllers.Screens;
 
+import Classes.ShowPanes.ScreenShowBorderPane;
 import Classes.dialogs.DialogsUtils;
 import Controllers.DataBase.Converters.*;
 import Controllers.DataBase.FXModels.CustomerFX;
@@ -10,6 +11,7 @@ import Controllers.DataBase.Service.*;
 import Controllers.DataBase.models.Reservation;
 import Controllers.DataBase.models.Room;
 import Controllers.DataBase.models.RoomReservation;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -24,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AllReservationsController {
+    private static final String pathToAllCustomersScreen = "/FXMLFiles/AllCustomers.fxml";
+    private static final String titleOfAllCustomersScreen = "All Customer";
+    private static final Boolean resizableAllCustomersScreen = false;
 
     @FXML
     private TableView<ReservationFX> reservationsTable;
@@ -83,7 +88,13 @@ public class AllReservationsController {
     private Button addReservationButton;
 
     @FXML
+    private Button addCustomerButton;
+
+    @FXML
     private GridPane roomsGridPane;
+
+    @FXML
+    private MenuItem contectMenuDelete;
 
 
     private ReservationService reservationService;
@@ -238,8 +249,8 @@ public class AllReservationsController {
             this.reservationService.saveEditInDB();
         }catch (NumberFormatException e){
             DialogsUtils.errorDialog("Wrong ammount of people format!");
-            this.reservationService.init();
         }
+        this.reservationService.init();
     }
 
     @FXML
@@ -249,8 +260,8 @@ public class AllReservationsController {
             this.reservationService.saveEditInDB();
         }catch (NullPointerException e){
             DialogsUtils.errorDialog("Wrong date format!");
-            this.reservationService.init();
         }
+        this.reservationService.init();
     }
 
     @FXML
@@ -260,38 +271,42 @@ public class AllReservationsController {
             this.reservationService.saveEditInDB();
         }catch (NullPointerException e){
             DialogsUtils.errorDialog("Wrong date format!");
-            this.reservationService.init();
         }
+        this.reservationService.init();
     }
 
     @FXML
     public void onStartingMealEditCommit(TableColumn.CellEditEvent<ReservationFX, String> reservationFXStringCellEditEvent) {
         this.reservationService.getReservationEdit().setStartingMeal(reservationFXStringCellEditEvent.getNewValue());
         this.reservationService.saveEditInDB();
+        this.reservationService.init();
     }
 
     @FXML
     public void onEndingMealEditCommit(TableColumn.CellEditEvent<ReservationFX, String> reservationFXStringCellEditEvent) {
         this.reservationService.getReservationEdit().setEndingMeal(reservationFXStringCellEditEvent.getNewValue());
         this.reservationService.saveEditInDB();
+        this.reservationService.init();
     }
 
     @FXML
     public void onStatusEditCommit(TableColumn.CellEditEvent<ReservationFX, String> reservationFXStringCellEditEvent) {
         this.reservationService.getReservationEdit().setStatus(reservationFXStringCellEditEvent.getNewValue());
         this.reservationService.saveEditInDB();
+        this.reservationService.init();
     }
 
     @FXML
     public void onCommentEditCommit(TableColumn.CellEditEvent<ReservationFX, String> reservationFXStringCellEditEvent) {
         this.reservationService.getReservationEdit().setComment(reservationFXStringCellEditEvent.getNewValue());
         this.reservationService.saveEditInDB();
+        this.reservationService.init();
     }
 
     public void addReservationOnAction() {
         LocalDate lowAdd = DateAndStringConverter.stringToLocalDate(this.reservationService.getReservation().getArrivalDate());
         LocalDate highAdd = DateAndStringConverter.stringToLocalDate(this.reservationService.getReservation().getDepartureDate());
-
+        
 
         this.roomReservationService = new RoomReservationService();
 
@@ -303,67 +318,71 @@ public class AllReservationsController {
 
         if(this.reservationService.getReservationFXSelectedRooms().isEmpty()){
             DialogsUtils.errorDialog("You have to select room/rooms to add reservation!");
-        }else {
-            int falses = 0;
-            DialogsUtils.communicat(String.valueOf(this.roomReservationService.getRoomReservationFXObservableList().size()));
-            for(RoomFX roomFX : this.reservationService.getReservationFXSelectedRooms()){
-                for(RoomReservationFX roomResFX : this.roomReservationService.getRoomReservationFXObservableList()){
-                    LocalDate arrivalDate = DateAndStringConverter.stringToLocalDate(roomResFX.getReservationFX().getArrivalDate().toString());
-                    LocalDate departureDate = DateAndStringConverter.stringToLocalDate(roomResFX.getReservationFX().getDepartureDate().toString());
+
+        } else {
+            if(lowAdd.isAfter(highAdd) | highAdd.isEqual(lowAdd)) {
+                DialogsUtils.errorDialog("Wrong range of arrival and departure dates!");
+            } else{
+                    int falses = 0;
+                    for (RoomFX roomFX : this.reservationService.getReservationFXSelectedRooms()) {
+                        for (RoomReservationFX roomResFX : this.roomReservationService.getRoomReservationFXObservableList()) {
+                            LocalDate arrivalDate = DateAndStringConverter.stringToLocalDate(roomResFX.getReservationFX().getArrivalDate().toString());
+                            LocalDate departureDate = DateAndStringConverter.stringToLocalDate(roomResFX.getReservationFX().getDepartureDate().toString());
 
 
 //                    DialogsUtils.communicat(lowAdd + " ... " + highAdd
 //                            +"\n" +arrivalDate + " ... " + departureDate );
 
-                    if (roomFX.getId() == roomResFX.getRoomFX().getId()) {
-                        if ((lowAdd.isBefore(arrivalDate) & (highAdd.isBefore(arrivalDate) | highAdd.isEqual(arrivalDate))) |
-                                (highAdd.isAfter(departureDate) & (lowAdd.isAfter(departureDate) | lowAdd.isEqual(departureDate)))) {
+                            if (roomFX.getId() == roomResFX.getRoomFX().getId()) {
+                                if ((lowAdd.isBefore(arrivalDate) & (highAdd.isBefore(arrivalDate) | highAdd.isEqual(arrivalDate))) |
+                                        (highAdd.isAfter(departureDate) & (lowAdd.isAfter(departureDate) | lowAdd.isEqual(departureDate)))) {
 
-                        } else {
-                            falses = falses + 1;
-                        }
-                    } else{
-                        if(lowAdd.isBefore(highAdd)) {
+                                } else {
+                                    falses = falses + 1;
+                                }
+                            } else {
+                                if (lowAdd.isBefore(highAdd)) {
 
-                        } else{
-                            falses = falses + 1;
+                                } else {
+                                    falses = falses + 1;
+                                }
+
+                            }
                         }
 
                     }
-                }
+                    if (falses > 0) {
+                        DialogsUtils.errorDialog("On this time there is room booked!");
 
+                    } else {
+                        this.reservationService.saveInDB();
+                        this.reservationService.init();
+                        this.reservationService.getReservationFXSelectedRooms().forEach(e -> {
+                            RoomReservation roomReservation = new RoomReservation();
+                            roomReservation.setRoom(RoomConverter.convertToRoom(e));
+                            roomReservation.setReservation(ReservationConverter.convertToReservation(reservationService.getLastReservation()));
+                            RoomReservationService roomReservationService = new RoomReservationService();
+                            roomReservationService.saveInDB(roomReservation);
+                        });
+                    }
+
+
+                    this.customersComboBox.getSelectionModel().clearSelection();
+                    this.ammountTextField.clear();
+                    this.arrivalDatePicker.getEditor().clear();
+                    this.departureDatePicker.getEditor().clear();
+                    this.arrivalTextField.clear();
+                    this.departureTextField.clear();
+                    this.statusTextField.clear();
+                    this.commentTextField.clear();
+
+
+                    this.actionClose();
             }
-            if(falses > 0) {
-               DialogsUtils.errorDialog("In this time there is room booked!");
-
-            } else {
-                DialogsUtils.communicat(String.valueOf(falses));
-                this.reservationService.saveInDB();
-                this.reservationService.init();
-                this.reservationService.getReservationFXSelectedRooms().forEach(e -> {
-                    RoomReservation roomReservation = new RoomReservation();
-                    roomReservation.setRoom(RoomConverter.convertToRoom(e));
-                    roomReservation.setReservation(ReservationConverter.convertToReservation(reservationService.getLastReservation()));
-                    RoomReservationService roomReservationService = new RoomReservationService();
-                    roomReservationService.saveInDB(roomReservation);
-                });
-            }
-
-
-            this.customersComboBox.getSelectionModel().clearSelection();
-            this.ammountTextField.clear();
-            this.arrivalDatePicker.getEditor().clear();
-            this.departureDatePicker.getEditor().clear();
-            this.arrivalTextField.clear();
-            this.departureTextField.clear();
-            this.statusTextField.clear();
-            this.commentTextField.clear();
-
-
-            this.actionClose();
         }
 
     }
+
 
     public void setCustomer() {
         this.reservationService.getReservation().setCustomerFX(this.customersComboBox.getSelectionModel().getSelectedItem());
@@ -378,5 +397,31 @@ public class AllReservationsController {
 
     public void onMouseClicked() {
         this.customerService.init();
+    }
+
+    public void addCustomerAction() {
+        ScreenShowBorderPane borderPane = new ScreenShowBorderPane(pathToAllCustomersScreen, titleOfAllCustomersScreen, resizableAllCustomersScreen);
+
+    }
+
+    public void deleteReservation() {
+        if(( this.reservationService.getReservationEdit().getStatus().equals("Reserved") &
+                LocalDate.now().plusDays(-1).isBefore(DateAndStringConverter.stringToLocalDate
+                        (this.reservationService.getReservationEdit().getArrivalDate())) ) |
+
+                ( this.reservationService.getReservationEdit().getStatus().equals("Piece") &
+                        (LocalDate.now().isEqual(DateAndStringConverter.stringToLocalDate
+                        (this.reservationService.getReservationEdit().getArrivalDate())) |
+                        LocalDate.now().isAfter(DateAndStringConverter.stringToLocalDate
+                                (this.reservationService.getReservationEdit().getArrivalDate())))
+                )) {
+
+            this.reservationService.deleteInDB();
+
+        }
+        else
+            DialogsUtils.errorDialog("This reservation has paid or piece status!\nDeleting is cancelled!");
+
+
     }
 }

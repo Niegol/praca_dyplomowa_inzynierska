@@ -136,17 +136,6 @@ public class UserFX {
 
     @Override
     public String toString() {
-        return "UserFX{" +
-                "id=" + id +
-                ", name=" + name +
-                ", surname=" + surname +
-                ", nick=" + nick +
-                ", phone=" + phone +
-                ", email=" + email +
-                ", adress=" + adress +
-                ", password=" + password +
-                ", access=" + access +
-                ", isLogged=" + isLogged +
-                '}';
+        return  name.getValue() + " " + surname.getValue() + ", " + phone.get();
     }
 }

@@ -19,7 +19,7 @@ public class UserService{
     public Boolean logIn(String log, String pass){
         UserDao userDao = new UserDao(DbManager.getConnectionSource());
         List<User> result = userDao.getAcess(log,pass);
-        if (result.isEmpty()==false){
+        if (!result.isEmpty()){
             User user = result.get(0);
             user.setLoggedIn(true);
             userDao.update(user);

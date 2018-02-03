@@ -3,8 +3,6 @@ package Controllers.DataBase.models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.util.Date;
-
 @DatabaseTable(tableName = "history_of_reservations")
 public class History implements BaseModel {
     public History (){
@@ -13,17 +11,24 @@ public class History implements BaseModel {
     @DatabaseField(columnName = "id_history", generatedId = true)
     private int idHistory;
 
-    @DatabaseField(columnName = "client_name", canBeNull = false)
-    private String clientName;
+    @DatabaseField(columnName = "customer_surname", canBeNull = false)
+    private String customerSurname;
 
-    @DatabaseField(columnName = "reservation_date", canBeNull = false)
-    private Date reservationDate;
+    @DatabaseField(columnName = "arrival_date", canBeNull = false, format = "yyyy-MM-dd")
+    private String arrival;
 
-    @DatabaseField(columnName = "user_nick", canBeNull = false)
-    private String userNick;
+    @DatabaseField(columnName = "departure_date", canBeNull = false, format = "yyyy-MM-dd")
+    private String departure;
 
-    @DatabaseField(columnName = "changing_date")
-    private Date changingDate;
+    @DatabaseField(columnName = "id_user", foreign = true, foreignAutoRefresh = true, canBeNull = false)
+    private User user;
+
+    @DatabaseField(columnName = "changing_date", canBeNull = false, format = "yyyy-MM-dd")
+    private String changingDate;
+
+    @DatabaseField(columnName = "amount_people", canBeNull = false)
+    private int amountPeople;
+
 
     public int getIdHistory() {
         return idHistory;
@@ -33,46 +38,65 @@ public class History implements BaseModel {
         this.idHistory = idHistory;
     }
 
-    public String getClientName() {
-        return clientName;
+    public String getCustomerSurname() {
+        return customerSurname;
     }
 
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
+    public void setCustomerSurname(String customerSurname) {
+        this.customerSurname = customerSurname;
     }
 
-    public Date getReservationDate() {
-        return reservationDate;
+    public String getArrival() {
+        return arrival;
     }
 
-    public void setReservationDate(Date reservationDate) {
-        this.reservationDate = reservationDate;
+    public void setArrival(String arrival) {
+        this.arrival = arrival;
     }
 
-    public String getUserNick() {
-        return userNick;
+    public String getDeparture() {
+        return departure;
     }
 
-    public void setUserNick(String userNick) {
-        this.userNick = userNick;
+    public void setDeparture(String departure) {
+        this.departure = departure;
     }
 
-    public Date getChangingDate() {
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getChangingDate() {
         return changingDate;
     }
 
-    public void setChangingDate(Date changingDate) {
+    public void setChangingDate(String changingDate) {
         this.changingDate = changingDate;
     }
+
+    public int getAmountPeople() {
+        return amountPeople;
+    }
+
+    public void setAmountPeople(int amountPeople) {
+        this.amountPeople = amountPeople;
+    }
+
 
     @Override
     public String toString() {
         return "History{" +
                 "idHistory=" + idHistory +
-                ", clientName='" + clientName + '\'' +
-                ", reservationDate=" + reservationDate +
-                ", userNick='" + userNick + '\'' +
-                ", changingDate=" + changingDate +
+                ", customerSurname='" + customerSurname + '\'' +
+                ", arrival='" + arrival + '\'' +
+                ", departure='" + departure + '\'' +
+                ", user=" + user +
+                ", changingDate='" + changingDate + '\'' +
+                ", amountPeople=" + amountPeople +
                 '}';
     }
 }

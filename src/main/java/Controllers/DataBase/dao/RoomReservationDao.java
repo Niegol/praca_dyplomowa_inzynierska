@@ -17,13 +17,26 @@ public class RoomReservationDao extends CommonDao{
         super(connectionSource);
     }
 
+    public List<RoomReservation> findByIdReservation(Reservation reservation){
+        List<RoomReservation> roomReservations = new ArrayList<>();
+
+        QueryBuilder<RoomReservation, Integer> roomReservationIntegerQB = getQueryBuilder(RoomReservation.class);
+        try {
+            roomReservationIntegerQB.where().eq("id_reservation", reservation);
+            PreparedQuery<RoomReservation> preparedQuery = roomReservationIntegerQB.prepare();
+            roomReservations = getDao(RoomReservation.class).query(preparedQuery);
+            return roomReservations;
+        } catch (SQLException e) {
+            DialogsUtils.errorDialog("Can't find rooms reservation!");
+            return roomReservations;
+        }
+    }
+
     public List<RoomReservation> informationsAboutReservations(LocalDate low, LocalDate high){
         List<RoomReservation> roomReservations = new ArrayList<>();
         try {
             QueryBuilder<RoomReservation, Integer> roomReservationQB = getQueryBuilder(RoomReservation.class);
 
-
- //           Where<RoomReservation, Integer> roomReservationWh = roomReservationQB.where();
 
             QueryBuilder<Room, Integer> roomQB = getQueryBuilder(Room.class);
             roomQB.where().eq("floor", 0).and().eq("pavilon", "A");
@@ -32,10 +45,6 @@ public class RoomReservationDao extends CommonDao{
             QueryBuilder<Reservation, Integer> reservationAr = getQueryBuilder(Reservation.class);
             QueryBuilder<Reservation, Integer> reservationDp = getQueryBuilder(Reservation.class);
 
-//            Where<Reservation, Integer> reservationWh = reservationQB.where();
-//            reservationWh.le("arrival_date", low);
-//            reservationWh.ge("departure_date", low);
-//            reservationWh.and(2);
 
 
 

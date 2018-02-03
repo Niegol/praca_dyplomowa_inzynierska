@@ -4,6 +4,7 @@ import Controllers.DataBase.Converters.RoomReservationConverter;
 import Controllers.DataBase.FXModels.RoomReservationFX;
 import Controllers.DataBase.dao.RoomReservationDao;
 import Controllers.DataBase.dbutilies.DbManager;
+import Controllers.DataBase.models.Reservation;
 import Controllers.DataBase.models.RoomReservation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +16,7 @@ import java.util.List;
 public class RoomReservationService {
     private ObservableList<RoomReservationFX> roomReservationFXObservableList = FXCollections.observableArrayList();
     private ObservableList<String> stringDatesObservableList = FXCollections.observableArrayList();
+
 
     public void init(LocalDate low, LocalDate high){
         String date;
@@ -34,6 +36,18 @@ public class RoomReservationService {
         });
         DbManager.closeConnectionSource();
     }
+
+    public void roomsToDelete(Reservation reservation){
+        RoomReservationDao roomReservationDao = new RoomReservationDao(DbManager.getConnectionSource());
+        List<RoomReservation> roomReservations = roomReservationDao.findByIdReservation(reservation);
+        roomReservations.forEach(roomReservation -> {
+            roomReservationDao.delete(roomReservation);
+        });
+
+        DbManager.closeConnectionSource();
+    }
+
+
 
     public void saveInDB(RoomReservation roomReservation){
         RoomReservationDao roomReservationDao = new RoomReservationDao(DbManager.getConnectionSource());
@@ -64,4 +78,6 @@ public class RoomReservationService {
     public void setRoomReservationFXObservableList(ObservableList<RoomReservationFX> roomReservationFXObservableList) {
         this.roomReservationFXObservableList = roomReservationFXObservableList;
     }
+
+
 }

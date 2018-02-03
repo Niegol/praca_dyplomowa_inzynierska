@@ -80,7 +80,7 @@ public abstract class CommonDao {
             Dao<T, I> dao = getDao(cls);
             dao.deleteById((I) id);
         } catch (SQLException e) {
-            DialogsUtils.errorDialog(e.getMessage());
+            DialogsUtils.errorDialog("Can't delete");
         }
     }
 

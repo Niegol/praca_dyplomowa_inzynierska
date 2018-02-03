@@ -3,10 +3,14 @@ package Controllers.DataBase.Service;
 import Classes.dialogs.DialogsUtils;
 import Controllers.DataBase.Converters.DateAndStringConverter;
 import Controllers.DataBase.Converters.ReservationConverter;
+import Controllers.DataBase.Converters.UserConverter;
 import Controllers.DataBase.FXModels.ReservationFX;
 import Controllers.DataBase.FXModels.RoomFX;
+import Controllers.DataBase.FXModels.RoomReservationFX;
+import Controllers.DataBase.dao.HistoryDao;
 import Controllers.DataBase.dao.ReservationDao;
 import Controllers.DataBase.dbutilies.DbManager;
+import Controllers.DataBase.models.History;
 import Controllers.DataBase.models.Reservation;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -21,6 +25,7 @@ public class ReservationService {
     private ObservableList<RoomFX> reservationFXSelectedRooms = FXCollections.observableArrayList();
     private ObjectProperty<ReservationFX> reservation = new SimpleObjectProperty<>(new ReservationFX());
     private ObjectProperty<ReservationFX> reservationEdit = new SimpleObjectProperty<>();
+    private ObservableList<RoomReservationFX> roomReservationFXES = FXCollections.observableArrayList();
 
     public void init(){
         ReservationDao reservationDao = new ReservationDao(DbManager.getConnectionSource());
@@ -52,6 +57,30 @@ public class ReservationService {
             return reservation;
         }else
             return this.reservation.get();
+    }
+
+    public void deleteInDB(){
+        History history = new History();
+        DialogsUtils.communicat(this.reservationEdit.get().getAmmountOfPeople());
+        history.setAmountPeople(Integer.parseInt(this.reservationEdit.get().getAmmountOfPeople()));
+        history.setUser(UserConverter.convertToUser(this.reservationEdit.get().getUserFX()));
+        history.setArrival(this.reservationEdit.get().getArrivalDate());
+        history.setDeparture(this.reservationEdit.get().getDepartureDate());
+        history.setCustomerSurname(this.reservationEdit.get().getCustomerFX().getSurname() +
+                ", " +this.reservationEdit.get().getCustomerFX().getName()+ ", "
+                + this.reservationEdit.get().getCustomerFX().getPhone());
+        history.setChangingDate(String.valueOf(LocalDate.now()));
+        HistoryDao historyDao = new HistoryDao(DbManager.getConnectionSource());
+        historyDao.createOrUpdate(history);
+        DbManager.closeConnectionSource();
+
+
+        RoomReservationService roomReservationService = new RoomReservationService();
+        roomReservationService.roomsToDelete(ReservationConverter.convertToReservation(this.reservationEdit.get()));
+        ReservationDao reservationDao = new ReservationDao(DbManager.getConnectionSource());
+        reservationDao.deleteById(Reservation.class, this.getReservationEdit().getId());
+        DbManager.closeConnectionSource();
+        this.init();
     }
 
     public void saveInDB(){
@@ -136,5 +165,13 @@ public class ReservationService {
 
     public void setReservationFXSelectedRooms(ObservableList<RoomFX> reservationFXSelectedRooms) {
         this.reservationFXSelectedRooms = reservationFXSelectedRooms;
+    }
+
+    public ObservableList<RoomReservationFX> getRoomReservationFXES() {
+        return roomReservationFXES;
+    }
+
+    public void setRoomReservationFXES(ObservableList<RoomReservationFX> roomReservationFXES) {
+        this.roomReservationFXES = roomReservationFXES;
     }
 }

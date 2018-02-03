@@ -6,9 +6,9 @@ import Controllers.DataBase.models.Reservation;
 public class ReservationConverter {
     public static Reservation convertToReservation(ReservationFX reservationFX){
         Reservation reservation = new Reservation();
-        reservation.setIdResevation(reservationFX.getId());
+        reservation.setIdReservation(reservationFX.getId());
         reservation.setCustomer(CustomerConverter.convertToCustomer(reservationFX.getCustomerFX()));
-        reservation.setAmpuntOfPeople(Integer.parseInt(reservationFX.getAmmountOfPeople()));
+        reservation.setAmountOfPeople(Integer.parseInt(reservationFX.getAmmountOfPeople()));
         reservation.setArrivalDate(reservationFX.getArrivalDate());
         reservation.setDepartureDate(reservationFX.getDepartureDate());
         reservation.setStartingMeal(reservationFX.getStartingMeal());
@@ -22,9 +22,9 @@ public class ReservationConverter {
 
     public static ReservationFX convertToReservationFX(Reservation reservation){
         ReservationFX reservationFX = new ReservationFX();
-        reservationFX.setId(reservation.getIdResevation());
+        reservationFX.setId(reservation.getIdReservation());
         reservationFX.setCustomerFX(CustomerConverter.conertToCustomerFX(reservation.getCustomer()));
-        reservationFX.setAmmountOfPeople(String.valueOf(reservation.getAmpuntOfPeople()));
+        reservationFX.setAmmountOfPeople(String.valueOf(reservation.getAmountOfPeople()));
         reservationFX.setArrivalDate(reservation.getArrivalDate());
         reservationFX.setDepartureDate(reservation.getDepartureDate());
         reservationFX.setStartingMeal(reservation.getStartingMeal());

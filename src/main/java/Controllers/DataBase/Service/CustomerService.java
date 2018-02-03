@@ -20,6 +20,7 @@ public class CustomerService{
 
 
 
+
     public static List<Customer> getCustomersList(){
         CustomerDao customerDao = new CustomerDao(DbManager.getConnectionSource());
         List<Customer> arrayList = customerDao.getCustomersList();
@@ -54,8 +55,7 @@ public class CustomerService{
     }
 
     public void saveEditInDB(){
-        if (this.customerEdit.get().emailProperty().getValue().contains("@") &
-                this.customerEdit.get().emailProperty().getValue().contains("."))
+        if (Service.isEmailCorrect(this.customerEdit.get().getEmail()))
             saveOrUpdate(this.getCustomerEdit());
         else
             DialogsUtils.communicat("Wrong email format!");

@@ -22,7 +22,7 @@ public class DialogsUtils {
     //metoda wyswietlajaca informacje o wyzucanych wyjatkach
     public static void errorDialog(String error){
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);  //inicjalizacja okna zawierajacego informacje o bledach
-        errorAlert.setTitle("EXCEPTION FAULT");
+        errorAlert.setTitle("ATTENTION!!!");
         errorAlert.setHeaderText("Something went wrong!");
         TextArea textArea = new TextArea(error);  //wypelnienie odpowiednia wiadomoscia TextArea
         textArea.setEditable(false);
