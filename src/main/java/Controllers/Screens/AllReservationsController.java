@@ -11,19 +11,30 @@ import Controllers.DataBase.Service.*;
 import Controllers.DataBase.models.Reservation;
 import Controllers.DataBase.models.Room;
 import Controllers.DataBase.models.RoomReservation;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableListValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.StringConverter;
+import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class AllReservationsController {
     private static final String pathToAllCustomersScreen = "/FXMLFiles/AllCustomers.fxml";
@@ -62,6 +73,11 @@ public class AllReservationsController {
 
     @FXML
     private ComboBox<CustomerFX> customersComboBox;
+    ObservableList<CustomerFX> originalItems;
+    private String filter = "";
+
+    @FXML
+    private ComboBox<String> statusComboBox;
 
     @FXML
     private TextField ammountTextField;
@@ -79,16 +95,11 @@ public class AllReservationsController {
     private TextField departureTextField;
 
     @FXML
-    private TextField statusTextField;
-
-    @FXML
     private TextField commentTextField;
 
     @FXML
     private Button addReservationButton;
 
-    @FXML
-    private Button addCustomerButton;
 
     @FXML
     private GridPane roomsGridPane;
@@ -163,7 +174,21 @@ public class AllReservationsController {
         this.customerService = new CustomerService();
         this.userService = new UserService();
         this.customerService.init();
+
         this.customersComboBox.setItems(this.customerService.getCustomerList());
+        this.originalItems = FXCollections.observableArrayList(this.customersComboBox.getItems());
+        this.customersComboBox.setTooltip(new Tooltip());
+        this.customersComboBox.setOnKeyPressed(this::handleOnKeyPressed);
+        this.customersComboBox.setOnHidden(this::handleOnHiding);
+
+        ObservableList<String> list = FXCollections.observableArrayList();
+
+        list.add("Reserved");
+        list.add("Paid");
+        list.add("Piece");
+
+        this.statusComboBox.setItems(list);
+
 
         this.idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
         this.idCustomerColumn.setCellValueFactory(cellData -> cellData.getValue().customerFXProperty());
@@ -188,6 +213,9 @@ public class AllReservationsController {
             this.reservationService.setReservationEdit(newValue);
         });
     }
+
+
+
     @FXML
     public void initBindings(){
         this.reservationService.reservationProperty().get().ammountOfPeopleProperty().bind(this.ammountTextField.textProperty());
@@ -195,14 +223,14 @@ public class AllReservationsController {
         this.reservationService.reservationProperty().get().departureDateProperty().bind(this.departureDatePicker.getEditor().textProperty());
         this.reservationService.reservationProperty().get().startingMealProperty().bind(this.arrivalTextField.textProperty());
         this.reservationService.reservationProperty().get().endingMealProperty().bind(this.departureTextField.textProperty());
-        this.reservationService.reservationProperty().get().statusProperty().bind(this.statusTextField.textProperty());
+
         this.reservationService.reservationProperty().get().commentProperty().bind(this.commentTextField.textProperty());
 
         this.addReservationButton.disableProperty().bind(this.customersComboBox.getSelectionModel().selectedItemProperty().isNull()
                         .or(this.ammountTextField.textProperty().isEmpty())
                         .or(this.arrivalDatePicker.getEditor().textProperty().isEmpty())
                         .or(this.departureDatePicker.getEditor().textProperty().isEmpty())
-                        .or(this.statusTextField.textProperty().isEmpty())
+                        .or(this.statusComboBox.getSelectionModel().selectedItemProperty().isNull())
                     );
     }
 
@@ -373,7 +401,6 @@ public class AllReservationsController {
                     this.departureDatePicker.getEditor().clear();
                     this.arrivalTextField.clear();
                     this.departureTextField.clear();
-                    this.statusTextField.clear();
                     this.commentTextField.clear();
 
 
@@ -388,6 +415,9 @@ public class AllReservationsController {
         this.reservationService.getReservation().setCustomerFX(this.customersComboBox.getSelectionModel().getSelectedItem());
     }
 
+    public void setStatus() {
+        this.reservationService.getReservation().setStatus(this.statusComboBox.getSelectionModel().getSelectedItem());
+    }
 
     public void actionClose(){
         Stage stage = (Stage) addReservationButton.getScene().getWindow();
@@ -421,7 +451,52 @@ public class AllReservationsController {
         }
         else
             DialogsUtils.errorDialog("This reservation has paid or piece status!\nDeleting is cancelled!");
-
-
     }
+
+
+    public void handleOnKeyPressed(KeyEvent e) {
+
+        ObservableList<CustomerFX> filteredList = FXCollections.observableArrayList();
+
+
+        KeyCode code = e.getCode();
+
+        if (code.isLetterKey()) {
+            filter += e.getText();
+        }
+        if (code == KeyCode.BACK_SPACE && filter.length() > 0) {
+            filter = filter.substring(0, filter.length() - 1);
+            this.customersComboBox.getItems().setAll(originalItems);
+        }
+        if (code == KeyCode.ESCAPE) {
+            filter = "";
+        }
+        if (filter.length() == 0) {
+            filteredList = originalItems;
+            this.customersComboBox.getTooltip().hide();
+        } else {
+            Stream<CustomerFX> itens = this.customersComboBox.getItems().stream();
+            String txtUsr = filter.toString().toLowerCase();
+            itens.filter(el -> el.toString().toLowerCase().contains(txtUsr)).forEach(filteredList::add);
+            this.customersComboBox.getTooltip().setText(txtUsr);
+            Window stage = this.customersComboBox.getScene().getWindow();
+            double posX = stage.getX() + this.customersComboBox.getBoundsInParent().getMinX();
+            double posY = stage.getY() + this.customersComboBox.getBoundsInParent().getMinY();
+            this.customersComboBox.getTooltip().show(stage, posX, posY);
+            this.customersComboBox.show();
+        }
+        this.customersComboBox.getItems().setAll(filteredList);
+    }
+
+    public void handleOnHiding(Event e) {
+        ObservableList<CustomerFX> originalItems = FXCollections.observableArrayList(this.customersComboBox.getItems());
+        filter = "";
+        this.customersComboBox.getTooltip().hide();
+        CustomerFX s = this.customersComboBox.getSelectionModel().getSelectedItem();
+        this.customersComboBox.getItems().setAll(originalItems);
+        this.customersComboBox.getSelectionModel().select(s);
+    }
+
+
+
 }

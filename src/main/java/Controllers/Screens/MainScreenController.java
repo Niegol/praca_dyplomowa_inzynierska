@@ -11,7 +11,6 @@ import Controllers.DataBase.Service.RoomReservationService;
 import Controllers.DataBase.Service.RoomService;
 import Controllers.DataBase.Service.UserService;
 import Controllers.DataBase.dbutilies.DbManager;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -21,6 +20,10 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MainScreenController{
     private static final String pathToLoginScreen = "/FXMLFiles/LoginScreen.fxml";
@@ -179,6 +182,8 @@ public class MainScreenController{
     @FXML
     private ScrollPane scrollPane;
 
+    private List<String> colors;
+    private int colorIterator = 0;
 
 
     private CustomerFX customerFX;
@@ -211,9 +216,9 @@ public class MainScreenController{
                 this.getAllRoomsForTableViev(low,high);
                 DbManager.closeConnectionSource();
             } else
-                DialogsUtils.communicat("zla data");
+                DialogsUtils.communicat("Wrong range!");
         }else
-            DialogsUtils.communicat("ktorys pusty");
+            DialogsUtils.communicat("Data fields can't be empty!");
     }
 
 
@@ -278,14 +283,27 @@ public class MainScreenController{
         if(!userService.isAdmin())
             this.showHistoryButton.setDisable(true);
 
+        this.colors = new ArrayList<>();
+        this.setColors();
         this.roomReservationService = new RoomReservationService();
         this.getAllRoomsForTableViev(LocalDate.now(),LocalDate.now().plusDays(10));
         this.customerService = new CustomerService();
         this.customerService.init();
         this.customersBox.setItems(this.customerService.getCustomerList());
     }
+    public void setColors(){
+        colors.add("lightgreen");
+        colors.add("aqua");
+        colors.add("chartreuse");
+        colors.add("brown");
+        colors.add("cornflowerblue");
+        colors.add("darkgreen");
+        colors.add("gold");
+
+    }
 
     public void getAllRoomsForTableViev(LocalDate low, LocalDate high){
+        Map<String, String> colorsMap = new HashMap<>();
         this.pavAfloor0.getChildren().clear();
         while(this.pavAfloor0.getRowConstraints().size() > 0){
             this.pavAfloor0.getRowConstraints().remove(0);
@@ -347,7 +365,7 @@ public class MainScreenController{
                 tex1.setPrefHeight(30);
                 tex2.setPrefHeight(30);
 
-                int idCustomer = 0;
+                String color = this.colors.get(0);
                 RoomReservationFX set = new RoomReservationFX();
                 LocalDate iIter = DateAndStringConverter.stringToLocalDate(this.roomReservationService.getStringDatesObservableList().get(i-1));
                 int jIter = Integer.parseInt(this.roomServiceA0.getRoomFXObservableList().get(j-1).getRoomNumber());
@@ -360,25 +378,33 @@ public class MainScreenController{
                     if (((iIter.isBefore(kDepDate) & iIter.isAfter(kArrivDate)) | iIter.isEqual(kArrivDate) | iIter.isEqual(kDepDate)) &
                                     kRoom == jIter ) {
 
-                        idCustomer = kIter.getReservationFX().getCustomerFX().getId();
+                        String idCustomer = String.valueOf(kIter.getReservationFX().getCustomerFX().getId());
+
+                        if(colorsMap.containsKey(idCustomer)){
+                            color = colorsMap.get(idCustomer);
+                        }else{
+                            colorsMap.put(idCustomer, this.getNextColor());
+                            color = colorsMap.get(idCustomer);
+                        }
+
                         set = kIter;
                         if(iIter.isEqual(kArrivDate)) {
                             RoomReservationFX finalSet = set;
-                            tex2.setText(String.valueOf(idCustomer));
+                            tex2.setText(idCustomer);
                             addMouseClickedEvent(tex2, finalSet);
 
                         }
                         if(iIter.isEqual(kDepDate)) {
-                            tex1.setText(String.valueOf(idCustomer));
+                            tex1.setText(idCustomer);
                             RoomReservationFX finalSet = set;
                             addMouseClickedEvent(tex1, finalSet);
 
                         }
                         if(iIter.isBefore(kDepDate) & iIter.isAfter(kArrivDate)){
-                            tex1.setText(String.valueOf(idCustomer));
+                            tex1.setText(idCustomer);
                             RoomReservationFX finalSet = set;
                             addMouseClickedEvent(tex1, finalSet);
-                            tex2.setText(String.valueOf(idCustomer));
+                            tex2.setText(idCustomer);
                             addMouseClickedEvent(tex2, finalSet);
                         }
 
@@ -388,8 +414,8 @@ public class MainScreenController{
                     }
                 }
 
-                setTextFields(tex1);
-                setTextFields(tex2);
+                setTextFields(tex1, color);
+                setTextFields(tex2, color);
                 tex1.setEditable(false);
                 tex2.setEditable(false);
                 dev.addColumn(0,tex1);
@@ -400,6 +426,15 @@ public class MainScreenController{
         }
         this.pavAfloor0.setGridLinesVisible(true);
 
+    }
+
+    private String getNextColor(){
+        if (this.colorIterator < this.colors.size()){
+            return this.colors.get(this.colorIterator++);
+        }else{
+            this.colorIterator = 0;
+            return  this.colors.get(this.colorIterator);
+        }
     }
 
     public void addMouseClickedEvent(TextField tex1, RoomReservationFX finalSet) {
@@ -414,15 +449,14 @@ public class MainScreenController{
         )));
     }
 
-    public void setTextFields(TextField tex2) {
-        if(!tex2.getText().isEmpty()) {
-            if (Integer.parseInt(tex2.getText()) % 2 == 1)
-                tex2.setStyle("-fx-background-color: chartreuse; -fx-border-color: black");
-            else
-                tex2.setStyle("-fx-background-color: lightgreen; -fx-border-color: black");
-        }
+
+    public void setTextFields(TextField tex, String color) {
+        if(!tex.getText().isEmpty())
+            tex.setStyle("-fx-background-color: "+color+"; -fx-border-color: black");
+
         else
-            tex2.setStyle("-fx-border-color: black");
+            tex.setStyle("-fx-border-color: black");
+
     }
 
     public void showReservationsAction(){

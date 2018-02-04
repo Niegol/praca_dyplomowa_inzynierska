@@ -70,7 +70,6 @@
             <Label layoutX="498.0" layoutY="59.0" text="Arrival time" AnchorPane.leftAnchor="498.0" AnchorPane.topAnchor="59.0" />
             <TextField fx:id="arrivalTextField" alignment="CENTER" layoutX="475.0" layoutY="77.0" prefHeight="27.0" prefWidth="118.0" AnchorPane.leftAnchor="475.0" AnchorPane.topAnchor="77.0" />
             <TextField fx:id="departureTextField" alignment="CENTER" layoutX="617.0" layoutY="77.0" prefHeight="27.0" prefWidth="113.0" AnchorPane.leftAnchor="617.0" AnchorPane.topAnchor="77.0" />
-            <TextField fx:id="statusTextField" alignment="CENTER" layoutX="751.0" layoutY="77.0" prefHeight="27.0" prefWidth="131.0" AnchorPane.leftAnchor="751.0" AnchorPane.topAnchor="77.0" />
             <TextField fx:id="commentTextField" layoutX="913.0" layoutY="31.0" prefHeight="27.0" prefWidth="270.0" AnchorPane.rightAnchor="213.0" AnchorPane.topAnchor="31.0" />
             <Label layoutX="752.0" layoutY="14.0" text="Ammount of people *" AnchorPane.leftAnchor="752.0" AnchorPane.topAnchor="14.0" />
             <Label layoutX="494.0" layoutY="14.0" text="Arrival Date*" AnchorPane.leftAnchor="494.0" AnchorPane.topAnchor="14.0" />
@@ -86,6 +85,7 @@
                </font>
             </Label>
             <Button fx:id="addCustomerButton" layoutX="302.0" layoutY="77.0" mnemonicParsing="false" onAction="#addCustomerAction" prefHeight="27.0" prefWidth="127.0" text="Create Customer" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="302.0" AnchorPane.topAnchor="77.0" />
+            <ComboBox fx:id="statusComboBox" layoutX="743.0" layoutY="77.0" onAction="#setStatus" prefWidth="150.0" promptText="Status" />
          </children></AnchorPane>
    </top>
 </BorderPane>
