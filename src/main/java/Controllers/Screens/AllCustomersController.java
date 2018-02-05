@@ -130,35 +130,25 @@ public class AllCustomersController {
     @FXML
     public void onEditCommitName(TableColumn.CellEditEvent<CustomerFX, String> customerFXStringCellEditEvent) {
         this.customerService.getCustomerEdit().setName(customerFXStringCellEditEvent.getNewValue());
-        try {
-            this.customerService.saveEditInDB();
-        }catch (NumberFormatException e) {
-            DialogsUtils.errorDialog("Name must be a text");
-            this.customerService.init();
-        }
+        this.customerService.saveEditInDB();
+        this.customerService.init();
 
     }
 
     @FXML
     public void onEditCommitSurname(TableColumn.CellEditEvent<CustomerFX, String> customerFXStringCellEditEvent) {
         this.customerService.getCustomerEdit().setSurname(customerFXStringCellEditEvent.getNewValue());
-        try {
-            this.customerService.saveEditInDB();
-        }catch (NumberFormatException e) {
-            DialogsUtils.errorDialog("Surname must be a text");
-            this.customerService.init();
-        }
+        this.customerService.saveEditInDB();
+        this.customerService.init();
+
     }
 
     @FXML
     public void onEditCommitPhone(TableColumn.CellEditEvent<CustomerFX, Number> customerFXNumberCellEditEvent) {
         this.customerService.getCustomerEdit().setPhone(String.valueOf(customerFXNumberCellEditEvent.getNewValue()));
-        try {
-            this.customerService.saveEditInDB();
-        }catch (NumberFormatException e){
-            DialogsUtils.errorDialog("Wrong phone format");
-            this.customerService.init();
-        }
+        this.customerService.saveEditInDB();
+        this.customerService.init();
+
     }
 
     @FXML

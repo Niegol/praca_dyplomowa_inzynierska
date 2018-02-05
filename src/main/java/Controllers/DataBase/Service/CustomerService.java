@@ -20,7 +20,6 @@ public class CustomerService{
 
 
 
-
     public static List<Customer> getCustomersList(){
         CustomerDao customerDao = new CustomerDao(DbManager.getConnectionSource());
         List<Customer> arrayList = customerDao.getCustomersList();
@@ -41,24 +40,20 @@ public class CustomerService{
     }
 
     public void saveInDB() {
-        if (this.getCustomer().emailProperty().getValue().contains("@") &
-                this.getCustomer().emailProperty().getValue().contains(".")) {
-
-                try {
-                    saveOrUpdate(this.getCustomer());
-                } catch (NumberFormatException e){
-                    DialogsUtils.errorDialog("Wrong phone or NIP format!");
-                }
-        }else
-            DialogsUtils.communicat("Wrong email format!");
+        if (Service.isEmailCorrect(this.customer.get().emailProperty().getValue()) &
+                Service.isNameCorrect(this.customer.get().nameProperty().getValue()) &
+                Service.isSurnameCorrect(this.customer.get().surnameProperty().getValue()) &
+                Service.isPhoneCorrect(this.customer.get().phoneProperty().getValue()) )
+            saveOrUpdate(this.getCustomer());
 
     }
 
     public void saveEditInDB(){
-        if (Service.isEmailCorrect(this.customerEdit.get().getEmail()))
+        if (Service.isEmailCorrect(this.customerEdit.get().emailProperty().getValue()) &
+                Service.isNameCorrect(this.customerEdit.get().nameProperty().getValue()) &
+                Service.isSurnameCorrect(this.customerEdit.get().surnameProperty().getValue()) &
+                Service.isPhoneCorrect(this.customerEdit.get().phoneProperty().getValue()) )
             saveOrUpdate(this.getCustomerEdit());
-        else
-            DialogsUtils.communicat("Wrong email format!");
 
     }
 

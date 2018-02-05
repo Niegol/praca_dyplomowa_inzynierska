@@ -217,8 +217,10 @@ public class MainScreenController{
                 DbManager.closeConnectionSource();
             } else
                 DialogsUtils.communicat("Wrong range!");
-        }else
-            DialogsUtils.communicat("Data fields can't be empty!");
+        }else {
+            DialogsUtils.communicat("Date field can't be empty");
+
+        }
     }
 
 
@@ -412,6 +414,7 @@ public class MainScreenController{
                         tex1.setStyle("-fx-border-color: black");
                         tex2.setStyle("-fx-border-color: black");
                     }
+
                 }
 
                 setTextFields(tex1, color);
@@ -421,10 +424,13 @@ public class MainScreenController{
                 dev.addColumn(0,tex1);
                 dev.addColumn(0,tex2);
                 this.pavAfloor0.addRow(i,dev);
+
+
            }
 
         }
         this.pavAfloor0.setGridLinesVisible(true);
+        this.colorIterator = 0;
 
     }
 
@@ -442,6 +448,8 @@ public class MainScreenController{
                 "Rezerwation Id: " + finalSet.getReservationFX().getId() +
                         "\nCustomer: "+ finalSet.getReservationFX().getCustomerFX().getName() + " " +
                         finalSet.getReservationFX().getCustomerFX().getSurname() +
+                        "\nContact: " + finalSet.getReservationFX().getCustomerFX().getPhone() +
+                        ", " + finalSet.getReservationFX().getCustomerFX().getEmail() +
                         "\nArrival time: " + finalSet.getReservationFX().getStartingMeal()+ "\nDeparture time: " +
                         finalSet.getReservationFX().getEndingMeal() + "\nAmmount of people: " +
                         finalSet.getReservationFX().getAmmountOfPeople() +

@@ -43,7 +43,7 @@
             <Label layoutX="388.0" layoutY="59.0" text="Surname*" />
             <TextField fx:id="name" alignment="CENTER" layoutX="341.0" layoutY="23.0" prefHeight="27.0" prefWidth="155.0" />
             <TextField fx:id="surname" alignment="CENTER" layoutX="340.0" layoutY="81.0" prefHeight="27.0" prefWidth="157.0" />
-            <TextField fx:id="phone" alignment="CENTER" layoutX="656.0" layoutY="23.0" prefHeight="27.0" prefWidth="84.0" />
+            <TextField fx:id="phone" alignment="CENTER" layoutX="606.0" layoutY="23.0" prefHeight="27.0" prefWidth="183.0" />
             <Label layoutX="678.0" layoutY="6.0" text="Phone*" />
             <Label layoutX="681.0" layoutY="59.0" text="Email*" />
             <TextField fx:id="email" alignment="CENTER" layoutX="607.0" layoutY="81.0" prefHeight="27.0" prefWidth="183.0" />

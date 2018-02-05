@@ -435,19 +435,8 @@ public class AllReservationsController {
     }
 
     public void deleteReservation() {
-        if(( this.reservationService.getReservationEdit().getStatus().equals("Reserved") &
-                LocalDate.now().plusDays(-1).isBefore(DateAndStringConverter.stringToLocalDate
-                        (this.reservationService.getReservationEdit().getArrivalDate())) ) |
-
-                ( this.reservationService.getReservationEdit().getStatus().equals("Piece") &
-                        (LocalDate.now().isEqual(DateAndStringConverter.stringToLocalDate
-                        (this.reservationService.getReservationEdit().getArrivalDate())) |
-                        LocalDate.now().isAfter(DateAndStringConverter.stringToLocalDate
-                                (this.reservationService.getReservationEdit().getArrivalDate())))
-                )) {
-
+        if( this.reservationService.getReservationEdit().getStatus().equals("Reserved")) {
             this.reservationService.deleteInDB();
-
         }
         else
             DialogsUtils.errorDialog("This reservation has paid or piece status!\nDeleting is cancelled!");
