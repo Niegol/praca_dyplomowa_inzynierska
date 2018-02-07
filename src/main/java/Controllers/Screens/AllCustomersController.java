@@ -5,11 +5,15 @@ import Controllers.DataBase.FXModels.CustomerFX;
 import Controllers.DataBase.Service.CustomerService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class AllCustomersController {
+
+public class AllCustomersController implements Initializable{
     @FXML
     private TextField name;
 
@@ -62,36 +66,6 @@ public class AllCustomersController {
     private CustomerService customerService;
 
 
-
-
-    @FXML
-    void initialize() {
-        this.customerService = new CustomerService();
-        customerService.init();
-
-        initBindings();
-
-        this.tableCustomers.setItems(this.customerService.getCustomerList());
-
-        this.columnID.setCellValueFactory(cellData -> cellData.getValue().idProperty());
-        this.columnName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-        this.columnSurname.setCellValueFactory(cellData -> cellData.getValue().surnameProperty());
-        this.columnPhone.setCellValueFactory(cellData -> cellData.getValue().phoneProperty());
-        this.columnEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
-        this.columnNip.setCellValueFactory(cellData -> cellData.getValue().nipProperty());
-        this.columnCompany.setCellValueFactory(cellData -> cellData.getValue().companyProperty());
-
-        this.columnName.setCellFactory(TextFieldTableCell.forTableColumn());
-        this.columnSurname.setCellFactory(TextFieldTableCell.forTableColumn());
-        this.columnPhone.setCellFactory(TextFieldTableCell.forTableColumn());
-        this.columnEmail.setCellFactory(TextFieldTableCell.forTableColumn());
-        this.columnNip.setCellFactory(TextFieldTableCell.forTableColumn());
-        this.columnCompany.setCellFactory(TextFieldTableCell.forTableColumn());
-
-        this.tableCustomers.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            this.customerService.setCustomerEdit(newValue);
-        });
-    }
 
     @FXML
     public void initBindings(){
@@ -210,5 +184,35 @@ public class AllCustomersController {
 
     public void setCustomerService(CustomerService customerService) {
         this.customerService = customerService;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.customerService = new CustomerService();
+        customerService.init();
+        initBindings();
+
+        this.tableCustomers.setItems(this.customerService.getCustomerList());
+
+        this.columnID.setCellValueFactory(cellData -> cellData.getValue().idProperty());
+        this.columnName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        this.columnSurname.setCellValueFactory(cellData -> cellData.getValue().surnameProperty());
+        this.columnPhone.setCellValueFactory(cellData -> cellData.getValue().phoneProperty());
+        this.columnEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
+        this.columnNip.setCellValueFactory(cellData -> cellData.getValue().nipProperty());
+        this.columnCompany.setCellValueFactory(cellData -> cellData.getValue().companyProperty());
+
+        this.columnName.setCellFactory(TextFieldTableCell.forTableColumn());
+        this.columnSurname.setCellFactory(TextFieldTableCell.forTableColumn());
+        this.columnPhone.setCellFactory(TextFieldTableCell.forTableColumn());
+        this.columnEmail.setCellFactory(TextFieldTableCell.forTableColumn());
+        this.columnNip.setCellFactory(TextFieldTableCell.forTableColumn());
+        this.columnCompany.setCellFactory(TextFieldTableCell.forTableColumn());
+
+        this.tableCustomers.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            this.customerService.setCustomerEdit(newValue);
+        });
+
+
     }
 }

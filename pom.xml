@@ -81,13 +81,6 @@
            <scope>test</scope>
        </dependency>
 
-       <dependency>
-           <groupId>de.saxsys</groupId>
-           <artifactId>jfx-testrunner</artifactId>
-           <version>1.0</version>
-       </dependency>
-
-
 
        <dependency>
            <groupId>org.testfx</groupId>
@@ -120,6 +113,24 @@
            <groupId>org.testfx</groupId>
            <artifactId>testfx-internal-java9</artifactId>
            <version>4.0.11-alpha</version>
+           <scope>test</scope>
+       </dependency>
+
+       <dependency>
+           <groupId>org.loadui</groupId>
+           <artifactId>testFx</artifactId>
+           <version>3.1.2</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.maven</groupId>
+           <artifactId>maven-model</artifactId>
+           <version>2.0.9</version>
+           <scope>test</scope>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.maven</groupId>
+           <artifactId>maven-model</artifactId>
+           <version>2.0.9</version>
            <scope>test</scope>
        </dependency>
 
