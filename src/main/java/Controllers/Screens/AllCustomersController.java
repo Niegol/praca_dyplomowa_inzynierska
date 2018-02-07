@@ -29,7 +29,7 @@ public class AllCustomersController {
     private TextField company;
 
     @FXML
-    private Button buttonAdd;
+    public Button buttonAdd;
 
     @FXML
     private TableView<CustomerFX> tableCustomers;
@@ -177,5 +177,38 @@ public class AllCustomersController {
 
     public void deleteOnAction() {
         this.customerService.deleteInDB();
+    }
+
+    public void setName(String n){
+        this.name.setText(n);
+    }
+
+    public void setSurname(String s){
+        this.surname.setText(s);
+    }
+
+    public void setPhone(String p){
+        this.phone.setText(p);
+    }
+
+    public void setEmail(String e){
+        this.email.setText(e);
+    }
+
+    public void setNip(String ni){
+        this.nip.setText(ni);
+    }
+
+    public void setCompany(String com){
+        this.company.setText(com);
+    }
+
+
+    public CustomerService getCustomerService() {
+        return customerService;
+    }
+
+    public void setCustomerService(CustomerService customerService) {
+        this.customerService = customerService;
     }
 }

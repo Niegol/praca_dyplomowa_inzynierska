@@ -320,7 +320,7 @@
    <left>
       <AnchorPane prefHeight="613.0" prefWidth="128.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" layoutX="7.0" layoutY="219.0" text="Show form date:" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="219.0" />
+            <Label alignment="CENTER" layoutX="7.0" layoutY="219.0" text="Show from date:" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="219.0" />
             <Button fx:id="showButton" layoutX="28.0" layoutY="328.0" mnemonicParsing="false" onAction="#showAction" prefHeight="27.0" prefWidth="71.0" text="Search" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="328.0" />
             <Label alignment="CENTER" layoutX="5.0" layoutY="263.0" text="To date:" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="263.0" />
             <DatePicker fx:id="checkInDatePicker" layoutX="10.0" layoutY="236.0" prefHeight="27.0" prefWidth="145.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="236.0" />
