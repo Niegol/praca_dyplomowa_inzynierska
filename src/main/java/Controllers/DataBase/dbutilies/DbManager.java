@@ -14,7 +14,7 @@ public class DbManager {
     private final static String JDBC_DRIVER = "com.mysql.jdbc.Driver"; //driver do bazy danych
     private final static String JDBC_URL = "jdbc:mysql://localhost:3306/BookingBase"; //adres URL bazy
     private final static String JDBC_USER = "root";         //dane do logowania sie do bazy
-    private final static String JDBC_PASSWORD = "niegol";   //
+    private final static String JDBC_PASSWORD = "admin";   //
 
     private static ConnectionSource connectionSource;
 

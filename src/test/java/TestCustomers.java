@@ -9,55 +9,66 @@ import javafx.scene.control.TextField;
 import org.junit.Test;
 import org.loadui.testfx.GuiTest;
 import java.io.IOException;
-import static junit.framework.TestCase.assertEquals;
+import java.util.List;
 
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertFalse;
 
 public class TestCustomers extends GuiTest{
     private static final String path = "/FXMLFiles/AllCustomers.fxml";
-    private static final String n = "Maciej";
-    private static final String s = "Niegolewski";
-    private static final String e = "maciek.niegolewski@wddw.pl";
-    private static final int ph = 789654321;
-
-
+    private final String[] names = new String[]{"Maciej", "Karol"};
+    private final String[] surnames = new String[]{"Kowal", ""};
+    private final String[] emails = new String[]{"drama@wp.pl", "karol@gmail.com"};
+    private final Integer[] phones = new Integer[]{721456234, null};
     @Override
     protected Parent getRootNode() {
         Parent parent = null;
         try {
-            parent = FXMLLoader.load(getClass().getResource(path));
-             return parent;
+            parent = FXMLLoader.load(getClass().getResource(path));         // symulacja otwarcia okna
+            return parent;
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return parent;
+        return null;
     }
-
     @Test
-    public void addCustomerTest() {
-        TextField name = find("#name");
+    public void addCustomerTestPossible() {
+        TextField name = find("#name");                // znajdowanie elementow na ktorych bedzie sie operowac
         TextField surname = find("#surname");
         TextField email = find("#email");
         TextField phone = find("#phone");
-        TableView<CustomerFX> customers = find("#tableCustomers");
-
-        name.setText(n);
-        surname.setText(s);
-        email.setText(e);
-        phone.setText(String.valueOf(ph));
-
-
+        TableView<CustomerFX> customers = find("#tableCustomers");          //tabela wyswietlajaca dane kientow
         Button buttonAdd = find("#buttonAdd");
+
+        name.setText(names[0]);                        // wypelnienie pol zadanymi wartosciami
+        surname.setText(surnames[0]);
+        email.setText(emails[0]);
+        phone.setText(String.valueOf(phones[0]));
+
         buttonAdd.fire();
 
+        Customer customerAfter = CustomerConverter.convertToCustomer           // pobranie ostatniego elementu tabeli
+                (customers.getItems().get(customers.getItems().size()-1));
 
-        Customer customerAfter = CustomerConverter.convertToCustomer(
-                customers.getItems().get(customers.getItems().size()-1));
-
-
-        assertEquals(customerAfter.getEmail(), e);
-
-
+        assertEquals(customerAfter.getName(), names[0]);
+        assertEquals(customerAfter.getSurname(), surnames[0]);
+        assertEquals(customerAfter.getEmail(), emails[0]);
+        assertEquals(customerAfter.getPhone(), (int)phones[0]);
     }
+    @Test
+    public void addCustomerTestImpossible(){
+        TextField name = find("#name");              // znajdowanie elementow na ktorych bedzie sie operowac
+        TextField surname = find("#surname");
+        TextField email = find("#email");
+        TextField phone = find("#phone");
+        Button buttonAdd = find("#buttonAdd");
 
+        name.setText(names[1]);                           // wypelnienie pol zadanymi wartosciami
+        surname.setText(surnames[1]);
+        email.setText(emails[1]);
+        phone.setText(String.valueOf(phones[1]));
 
+        assertTrue(buttonAdd.isDisable());
+    }
 }
