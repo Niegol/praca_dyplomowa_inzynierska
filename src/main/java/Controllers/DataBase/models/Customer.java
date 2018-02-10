@@ -3,6 +3,12 @@ package Controllers.DataBase.models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+/**
+ * Klasa, której atrybuty posiadają wszelkie niezbędne informacje o klientach. Klasa ta rozszerza interfejs BaseModel.
+ * Klasa Javowa będąca reprezentacją encji bazodanowej w programie. Odpwowiada za encje typu customer. Typem klucza
+ * głównego jest zmienna typu integer. Posiada settery oraz gettery dzięki którym ORMLite może odrazu tworzyć obiekty
+ * tego typu po otrzymaniu odpowiedzi z bazy danych, dzięki obiektom DAO.
+ */
 @DatabaseTable(tableName = "customers")
 public class Customer implements BaseModel{
     public Customer() {

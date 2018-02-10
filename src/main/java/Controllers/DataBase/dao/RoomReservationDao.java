@@ -11,12 +11,27 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Klasa rozszerzająca klasę CommonDao. Umożliwia tworzenie kwerdend odpowiedzialnych za modele klasy RoomReservation.
+ * Można powiedzieć, że jest to główna klasa programu, gdyż zawiera w sobie najważniejsze informacje czyli do jakiej
+ * rezerwacji przypisany jest dany pokój, klient.
+ */
 public class RoomReservationDao extends CommonDao{
+    /**
+     * Konstruktor przyjmujący status połączenia z bazą danych. Każdy stworzony obiekt musi posiadać tą informację.
+     * @param connectionSource status połączenia z bazą danych.
+     */
     public RoomReservationDao(ConnectionSource connectionSource) {
         super(connectionSource);
     }
 
+    /**
+     * Metoda zwracająca wszystkie pokoje przypisane do danej rezerwacji, poprzez zadanie w argumencie modelu
+     * Reservation, do którego mają one zostać przypisane. W przypadku błędnego nawiązania połączenia z bazą danych
+     * wyświetlony zostanie odpowiedni komunikat.
+     * @param reservation parametr, do którego przypisane są pokoje.
+     * @return lista obiektów RoomReservation zawierająca wszystkie pokoje przypisane do zadanej rezerwacji
+     */
     public List<RoomReservation> findByIdReservation(Reservation reservation){
         List<RoomReservation> roomReservations = new ArrayList<>();
 
@@ -32,6 +47,16 @@ public class RoomReservationDao extends CommonDao{
         }
     }
 
+    /**
+     * Metoda zwracająca obiekty RoomReservations, na podanym przedziale czasowym. Każdy obiekt posiada przypisany do
+     * niego konkretny pokój (Room) oraz Reserwację. Ta z kolei posiada klienta (Customer), który dokonał rezerwacji.
+     * W przypadku błędnego połączenia z bazą danych wyświetlone zostanie odpowiednie okno dialogowe z informacją o
+     * błędzie.
+     * @param low data, od której ma nastąpić wysukiwanie.
+     * @param high data, do której ma nastąpić wyszukiwanie.
+     * @return lista wszystkich RoomReserwations, czyli wszystkich rezerwacji i przypisanymi do nich pokojami na zadanym
+     * terminie
+     */
     public List<RoomReservation> informationsAboutReservations(LocalDate low, LocalDate high){
         List<RoomReservation> roomReservations = new ArrayList<>();
         try {
@@ -61,8 +86,6 @@ public class RoomReservationDao extends CommonDao{
 //
 //            reservationQB.join(reservationAr);
 //            reservationQB.join(reservationDp);
-
-
 
             reservationQB.join(customerQB);
             roomReservationQB.join(roomQB).join(reservationQB);

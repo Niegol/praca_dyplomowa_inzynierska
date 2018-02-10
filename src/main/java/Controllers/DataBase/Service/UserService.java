@@ -11,11 +11,27 @@ import javafx.beans.property.SimpleObjectProperty;
 
 import java.util.List;
 
+/**
+ * Klasa kontrolująca wywoływanie obiektów klasy UserDao. Tworzy je w przypadkach, gdy spełnione są odpowiednie
+ * warunki. Posiada seterry i gettery argumetów tej klasy, dzięki którym możliwe jest operowanie na tychże argumentach.
+ */
 public class UserService{
+    /**
+     * Obiekt obserwowalny przechowujący aktualne dane użytkownika.
+     */
     private ObjectProperty<UserFX> userFXObjectProperty = new SimpleObjectProperty<>();
+    /**
+     * Obiekt obserwowalny przechowuje dane w momencie edycji hasła użytkownika.
+     */
     private ObjectProperty<UserFX> userFXNewPassObjectProperty = new SimpleObjectProperty<>();
 
 
+    /**
+     * Funkcja zmieniająca status użytkownika na zalogowany po dokonaniu poprawnego logowania.
+     * @param log login użytkownika.
+     * @param pass hasło użytkownika.
+     * @return true/false w zależności czy możliwe jest zalogowanie czy nie.
+     */
     public Boolean logIn(String log, String pass){
         UserDao userDao = new UserDao(DbManager.getConnectionSource());
         List<User> result = userDao.getAcess(log,pass);
@@ -32,6 +48,9 @@ public class UserService{
         }
     }
 
+    /**
+     * Funkcja wylogowująca danego użytkownika. Zmienia jego pole isLoggedIn na false.
+     */
     public void logOut(){
         UserDao userDao = new UserDao(DbManager.getConnectionSource());
         List<User> result = userDao.whoIsLoggedIn();
@@ -41,6 +60,10 @@ public class UserService{
         DbManager.closeConnectionSource();
     }
 
+    /**
+     * Funkcja zwracająca nick (login) zalogowanego do sytemu użytkownika.
+     * @return login zalogowanego użytkownika.
+     */
     public String getUserNick(){
         UserDao userDao = new UserDao(DbManager.getConnectionSource());
         List<User> list = userDao.whoIsLoggedIn();
@@ -49,6 +72,10 @@ public class UserService{
         return nick;
     }
 
+    /**
+     * Funkcja zwracająca obiekt, którym jest zalogowany użytkownik.
+     * @return zalogowany użytkownik.
+     */
     public User getLoggedUser(){
         UserDao userDao = new UserDao(DbManager.getConnectionSource());
         User user = userDao.whoIsLoggedIn().get(0);
@@ -56,11 +83,18 @@ public class UserService{
         return user;
     }
 
+    /**
+     * Inicjalizuje wartości atrybutów klasy.
+     */
     public void init(){
         this.userFXObjectProperty.setValue(UserConverter.convertToUserFX(this.getLoggedUser()));
         this.userFXNewPassObjectProperty.setValue(UserConverter.convertToUserFX(this.getLoggedUser()));
     }
 
+    /**
+     * Funkcja sprawdza czy zalogowany obecnie użytkownik jest administratorem, czy nie.
+     * @return true/false w zależności czy użytkownik jest administratorem, czy nie.
+     */
     public boolean isAdmin(){
         boolean isAdmin;
         UserDao userDao = new UserDao(DbManager.getConnectionSource());
@@ -69,18 +103,24 @@ public class UserService{
         return isAdmin;
     }
 
+    /**
+     * Funkcja aktualizująca dane użytkownika. Aby mogła się wykonać przynajmniej jedna zmienna powinna zostać zmieniona.
+     * @param phone wprowadzony numer telefonu.
+     * @param email wprowadzony adres email.
+     * @param adress wprowadzony adres zamieszkania.
+     */
     public void update(String phone, String email, String adress){
         try {
-            if (!phone.isEmpty() && !email.isEmpty() && !adress.isEmpty()) {
+            if (!phone.isEmpty() & !email.isEmpty() & !adress.isEmpty()) {
                 Boolean change = false;
                 int number = Integer.parseInt(phone);
                 UserDao userDao = new UserDao(DbManager.getConnectionSource());
                 User user = userDao.whoIsLoggedIn().get(0);
-                if (number != user.getPhone()) {
+                if (number != user.getPhone() & Service.isPhoneCorrect(phone)) {
                     user.setPhone(number);
                     change = true;
                 }
-                if (!email.equals(user.getEmail()) && email.contains("@") && email.contains(".")) {
+                if (!email.equals(user.getEmail()) & Service.isEmailCorrect(email)) {
                     user.setEmail(email);
                     change = true;
                 }
@@ -104,6 +144,11 @@ public class UserService{
         }
     }
 
+    /**
+     * Funkcja zapisująca zmienione hasło użytkownika do systemu.
+     * @param oldPass stare hasło.
+     * @param confPass potwierdzenie hasła.
+     */
     public void saveUserInDB(String oldPass, String confPass){
         if(oldPass.equals(confPass))
             saveOrUpdate(this.getUserFXNewPassObjectProperty());
@@ -111,6 +156,10 @@ public class UserService{
             DialogsUtils.communicat("Wrong old password!");
     }
 
+    /**
+     * Funkcja zapisująca dane użytkownika z widoku.
+     * @param userFX obiekt użytkownika z widoku UserFX, który ma zostać zapisany lub zedytowany w bazie danych.
+     */
     public void saveOrUpdate(UserFX userFX){
         UserDao userDao = new UserDao(DbManager.getConnectionSource());
         User user = UserConverter.convertToUser(userFX);

@@ -8,11 +8,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Klasa kontrolująca okno odpowiedzialne za logowanie do aplikacji.
+ */
 public class LoginScreenController implements Initializable {
     private static final String path = "/FXMLFiles/MainScreen.fxml";
     private static final String screenTitle = "Main Screen";
@@ -33,6 +38,11 @@ public class LoginScreenController implements Initializable {
     @FXML
     private Label wrongData;
 
+    /**
+     * Metoda odpowiedzialna za logowanie do systemu. Przypisana do przycisku login. Jezeli po wprowadzeniu danych
+     * klasa UserService pozwoli na zalogowanie się (poprawne dane logowania) otwarte zostanie główne okno aplikacji,
+     * w przeciwnym razie wyświetloma zostanie informacja, że któreś z pól posiada złą wartość.
+     */
     @FXML
     private void actionLogin(){
         wrongData.setVisible(false);
@@ -46,12 +56,36 @@ public class LoginScreenController implements Initializable {
         }
 
     }
+
+    /**
+     * Metoda zamykająca okno logowania.
+     */
+    @FXML
     public void close(){
         Stage stage = (Stage) login.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Metoda uruchamiana przy starcie aplikacji. Binduje ona pola tekstowe z przyciskiem. Do czasu zapełnienia dwóch
+     * pól przycisk logowania będzie niedostępny.
+     * @param location adres URL okna.
+     * @param resources żródło.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.login.disableProperty().bind(this.userName.textProperty().isEmpty().or(
+                this.password.textProperty().isEmpty()
+        ));
+    }
+
+    /**
+     * Metoda umożliwiająca zalogowanie się do systemu po wciśnięciu klawisza Enter.
+     * @param keyEvent informacja o wciśniętym klawiszu.
+     */
+    public void enterPressed(KeyEvent keyEvent) {
+        KeyCode code = keyEvent.getCode();
+        if (code == KeyCode.ENTER)
+            this.login.fire();
     }
 }

@@ -3,6 +3,12 @@ package Controllers.DataBase.models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+/**
+ * Klasa, której obiekty niosa informację o pokojach. Rozszerza interfejs BaseModel. Klasa Javowa będąca reprezentacją
+ * encji bazodanowej w programie. Odpwowiada za encje typu room. Typem klucza głównego jest zmienna typu integer.
+ * Posiada settery oraz gettery dzięki którym ORMLite może odrazu tworzyć obiekty tego typu po otrzymaniu odpowiedzi z
+ * bazy danych, dzięki obiektom DAO.
+ */
 @DatabaseTable(tableName = "rooms")
 public class Room implements BaseModel{
     public Room(){

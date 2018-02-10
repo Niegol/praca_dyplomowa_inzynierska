@@ -36,6 +36,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+/**
+ * Klasa kontrolerowa. Odpowiada za funkcjonowanie okna zarządzającego rezerwacjami
+ */
 public class AllReservationsController {
     private static final String pathToAllCustomersScreen = "/FXMLFiles/AllCustomers.fxml";
     private static final String titleOfAllCustomersScreen = "All Customer";
@@ -115,6 +118,13 @@ public class AllReservationsController {
     private RoomReservationService roomReservationService;
 
 
+    /**
+     * Metoda wykonująca się na początku otworzenia okna. Inicjuje ona rezerwacje (Reservations) w TableView, definiuje
+     * odpowiedni format elementów wprowadzających zakres rezerwacji, inicjuje metodę initBindings(), incjuje listę
+     * klientów, których można wybrać podczas dokonywania rezerwacji, nadaje tej liście możliwość filtracji, incjalizuje
+     * listę statusu rezerwacji (Reserved, Paid, Piece), inicjuje pokoje, które można wybrać podczas dokonywania
+     * rezerwacji, inicjuje możliwość edytowania każdej komurki rezerwacji dzięki metodom setCellFactory.
+     */
     @FXML
     void initialize() {
         this.reservationService = new ReservationService();
@@ -215,7 +225,12 @@ public class AllReservationsController {
     }
 
 
-
+    /**
+     * Metoda odpowiadająca za bindowanie elementów okna. Blokuje ona przycisk dodawania rezerwacji do czasu podania
+     * wszystkich niezbędnych informacji do jej stworzenia. Dodatkowo każdy TextField zostaje zbindowany z obiektem ObiektProperty,
+     * odpowiadającemu za rezerwację (Reservation). Dzęki temu wpisanie jakiegokolwiek znaku w pole tekstowe odrazu
+     * aktualizuje odpowiadający mu atrybut obiektu ObservableProperty.
+     */
     @FXML
     public void initBindings(){
         this.reservationService.reservationProperty().get().ammountOfPeopleProperty().bind(this.ammountTextField.textProperty());
@@ -234,6 +249,10 @@ public class AllReservationsController {
                     );
     }
 
+    /**
+     * Metoda dynamicznie wyświetlająca ilość pokoi, które można zarezerwować. Pokoje te są wyświetlane jako obiekty
+     * ChckBox, które po zaakceptowaniu dodają pokój do rezerwacji, a odakceptowanie równa się usunięciu z listy.
+     */
     public void setGridPane(){
         this.roomService = new RoomService();
         roomService.init("A",0);
@@ -265,11 +284,16 @@ public class AllReservationsController {
         }
     }
 
+
     @FXML
     public void onEditCustomerCommit(TableColumn.CellEditEvent<ReservationFX, String> reservationFXNumberCellEditEvent) {
        // this.reservationService.getReservationEdit().getCustomerFX().setId(reservationFXNumberCellEditEvent.getNewValue());
     }
 
+    /**
+     * Metoda edytująca ilość osób przypisanych rozererwacji.
+     * @param reservationFXStringCellEditEvent rezerwacja ze zmienioną ilością osób.
+     */
     @FXML
     public void onAmmountEditCommit(TableColumn.CellEditEvent<ReservationFX, String> reservationFXStringCellEditEvent) {
         this.reservationService.getReservationEdit().setAmmountOfPeople(reservationFXStringCellEditEvent.getNewValue());
@@ -281,6 +305,11 @@ public class AllReservationsController {
         this.reservationService.init();
     }
 
+    /**
+     * Metoda zmieniająca datę przyjazdu przypisaną do rezerwacji. Wprowadzenie niopoprawneo formatu, albo zakresu
+     * uniemożliwi dodanie.
+     * @param reservationFXStringCellEditEvent rezerwacja ze zmienioną datą przyjazdu.
+     */
     @FXML
     public void onArrivalDateEditCommit(TableColumn.CellEditEvent<ReservationFX, String> reservationFXStringCellEditEvent) {
         this.reservationService.getReservationEdit().setArrivalDate(reservationFXStringCellEditEvent.getNewValue());
@@ -292,6 +321,11 @@ public class AllReservationsController {
         this.reservationService.init();
     }
 
+    /**
+     * Metoda zmieniająca datę wyjazdu przypisaną do rezerwacji. Wprowadzenie niopoprawneo formatu, albo zakresu
+     * uniemożliwi dodanie.
+     * @param reservationFXStringCellEditEvent rezerwacja ze zmienioną datą wyjazdu.
+     */
     @FXML
     public void onDepartureDateEditCommit(TableColumn.CellEditEvent<ReservationFX, String> reservationFXStringCellEditEvent) {
         this.reservationService.getReservationEdit().setDepartureDate(reservationFXStringCellEditEvent.getNewValue());
@@ -303,6 +337,10 @@ public class AllReservationsController {
         this.reservationService.init();
     }
 
+    /**
+     * Metoda zmieniająca konkretny czas przyjazdu. Może to być godzina, jak i pora dnia.
+     * @param reservationFXStringCellEditEvent rezerwacja ze zmienionym czasem przyjazdu.
+     */
     @FXML
     public void onStartingMealEditCommit(TableColumn.CellEditEvent<ReservationFX, String> reservationFXStringCellEditEvent) {
         this.reservationService.getReservationEdit().setStartingMeal(reservationFXStringCellEditEvent.getNewValue());
@@ -310,6 +348,10 @@ public class AllReservationsController {
         this.reservationService.init();
     }
 
+    /**
+     * Metoda zmieniająca konkretny czas wyjazdu. Może to być godzina, jak i pora dnia.
+     * @param reservationFXStringCellEditEvent rezerwacja ze zmienionym czasem wyjazdu.
+     */
     @FXML
     public void onEndingMealEditCommit(TableColumn.CellEditEvent<ReservationFX, String> reservationFXStringCellEditEvent) {
         this.reservationService.getReservationEdit().setEndingMeal(reservationFXStringCellEditEvent.getNewValue());
@@ -317,6 +359,11 @@ public class AllReservationsController {
         this.reservationService.init();
     }
 
+    /**
+     * Metoda zmieniająca status rezerwacji. Status może przyjmować wartości Reserved, Piece, Paid (Zarezerwowano,
+     * Zaliczka, Zapłacono). Wprowadzenie każdej innej frazy uniemożliwi dodanie rezerwacji.
+     * @param reservationFXStringCellEditEvent rezerwacja ze zmienionym statusem.
+     */
     @FXML
     public void onStatusEditCommit(TableColumn.CellEditEvent<ReservationFX, String> reservationFXStringCellEditEvent) {
         this.reservationService.getReservationEdit().setStatus(reservationFXStringCellEditEvent.getNewValue());
@@ -324,6 +371,10 @@ public class AllReservationsController {
         this.reservationService.init();
     }
 
+    /**
+     * Metoda zmieniająca komentarz do rezerwacji. Może to być dowolna fraza.
+     * @param reservationFXStringCellEditEvent rezerwacja ze zmienionym komentarzem.
+     */
     @FXML
     public void onCommentEditCommit(TableColumn.CellEditEvent<ReservationFX, String> reservationFXStringCellEditEvent) {
         this.reservationService.getReservationEdit().setComment(reservationFXStringCellEditEvent.getNewValue());
@@ -331,6 +382,11 @@ public class AllReservationsController {
         this.reservationService.init();
     }
 
+    /**
+     * Metoda przypisana do przycisku dodającego rezerwację addReservationButton. Metoda pobiera z bazy danych wszystkie
+     * rezerwacje z bazy danych na z zakresu, na którym ma zostać dokonana rezerwacja i sprawdza czy wybrane pokoje
+     * nie są już zajęte. Sprawdzany jest dodatkowo zakrez dat.
+     */
     public void addReservationOnAction() {
         LocalDate lowAdd = DateAndStringConverter.stringToLocalDate(this.reservationService.getReservation().getArrivalDate());
         LocalDate highAdd = DateAndStringConverter.stringToLocalDate(this.reservationService.getReservation().getDepartureDate());
@@ -424,16 +480,24 @@ public class AllReservationsController {
         stage.close();
     }
 
-
+    /**
+     * Metoda inicjująca wszystkich klientów (Customer) w ComboBoxie od razu po naciśnięciu na niego.
+     */
     public void onMouseClicked() {
         this.customerService.init();
     }
 
+    /**
+     * Metoda otwierająca okno dodawania klientów.
+     */
     public void addCustomerAction() {
         ScreenShowBorderPane borderPane = new ScreenShowBorderPane(pathToAllCustomersScreen, titleOfAllCustomersScreen, resizableAllCustomersScreen);
 
     }
 
+    /**
+     * Metoda usuwająca rezerwacje. Możliwe jest usunięcie tylko rezerwacji o statusie Reserved.
+     */
     public void deleteReservation() {
         if( this.reservationService.getReservationEdit().getStatus().equals("Reserved")) {
             this.reservationService.deleteInDB();
@@ -443,6 +507,14 @@ public class AllReservationsController {
     }
 
 
+    /**
+     * Metoda odpowiedzialna za filtrację klientów podczas dodawania rezerwacji. Każdy wciśnięty klawisz jest odpowiednio
+     * przetwarzany, albo ignorowany. Ignorowane są cyfry oraz znaki specjalne. Wciśnięcie klawisza odpowiadającego
+     * literze powoduje dodanie jej do fultracji wyszukiwania. Wyszukiwanie jest możliwe na całej długości, nie tylko
+     * od początku, czy końca. Filtracja jest możliwa po imieniu oraz nazwisku. Naciśnięcie klawisza Backspace spowoduje
+     * usunięcie ostatniego znaku, jeżeli jest możliwość jego usunięcia.
+     * @param e obiekt klasy KeyEvent. Posiada informację o wciśniętym klawiszu.
+     */
     public void handleOnKeyPressed(KeyEvent e) {
 
         ObservableList<CustomerFX> filteredList = FXCollections.observableArrayList();
@@ -477,6 +549,10 @@ public class AllReservationsController {
         this.customersComboBox.getItems().setAll(filteredList);
     }
 
+    /**
+     * Metoda, odpowiadająca za filtrację. Po zamknięciu listy, filtrowany ciąg znaków zostaje usunięty.
+     * @param e Event.
+     */
     public void handleOnHiding(Event e) {
         ObservableList<CustomerFX> originalItems = FXCollections.observableArrayList(this.customersComboBox.getItems());
         filter = "";

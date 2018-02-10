@@ -3,6 +3,14 @@ package Controllers.DataBase.models;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+/**
+ * Obiekty tej klasy są tworzone w momencie usunięcia przez użytkownika rezerwacji. Niosą ze sobą informację o tejże
+ * usuniętej rezerwacji oraz o użytkowniku, który tego dokonał. Klasa rozszerza interfejs BaseModel. Klasa Javowa będąca
+ * reprezentacją encji bazodanowej w programie. Odpwowiada za encje typu history_of_reservations. Typem klucza głównego
+ * jest zmienna typu integer. Posiada settery oraz gettery dzięki którym ORMLite może odrazu tworzyć obiekty tego typu
+ * po otrzymaniu odpowiedzi z bazy danych, dzięki obiektom DAO. Posiada w sobie klucz obcy- obiekt użytkownika, który
+ * usunął daną rezerwacjię.
+ */
 @DatabaseTable(tableName = "history_of_reservations")
 public class History implements BaseModel {
     public History (){

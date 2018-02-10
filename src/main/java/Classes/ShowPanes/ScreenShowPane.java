@@ -7,10 +7,16 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-/*
-Klasa wyswietlajaca nowe okno z glownym kontenerem
+/**
+ * Klasa odpowiedzialna za wyświetlanie okien aplikacji zbudowanych w kontenerze Pane.
  */
 public class ScreenShowPane {
+    /**
+     * Konstruktor wyświetla okno odrazu po inicjalizacji
+     * @param path ścieżka do pliku fxml, który ma zostać otworzony
+     * @param screenTitle tytuł okna, które ma zostać wyświetlone
+     * @param resizable przyjmuje wartość true/false czy okno może mieć zmienianą wielkość jeżeli podana została błędna ścieżka zostanie obsłużony wyjątek i wyświetlone zostanie komunikat
+     */
     public ScreenShowPane(String path, String screenTitle, Boolean resizable) {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource(path));
 

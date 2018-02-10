@@ -13,6 +13,9 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Klasa klntrolująca onko zmiany danych użytkownika.
+ */
 public class UserSettingsController implements Initializable{
     private static final String pathToChangePassword = "/FXMLFiles/ChangePassword.fxml";
     private static final String titleOfChangePassword = "Change Password";
@@ -39,23 +42,39 @@ public class UserSettingsController implements Initializable{
     @FXML
     private Button buttonSave;
 
+    /**
+     * Metoda przypisana do przycisku buttonSave. Po jego naciśnięciu nastąpi wywołanie metody zapisującej zmiany i
+     * jeżeli wprowadzone formaty danych są poprawne zmiana zostanie dokonana.
+     */
     public void actionSave(){
         UserService userService = new UserService();
         userService.update(phone.getText(), email.getText(), adress.getText());
         actionClose();
     }
 
+    /**
+     * Metoda zamykająca okno. Przypisana do przycisku buttonClose.
+     */
     public void actionClose(){
         Stage stage = (Stage) buttonClose.getScene().getWindow();
         stage.close();
     }
 
+    /**
+     * Metoda przenosi do okna zmiany hasła.
+     */
     public void actionChangePassword(){
         ScreenShowAnchorPane anchorPane = new ScreenShowAnchorPane(pathToChangePassword, titleOfChangePassword, resizableChangePassword);
         actionClose();
     }
 
 
+    /**
+     * Metoda wykonywana od razu przyotwieraniu okna. Domyślnie wypełnia ona dane użytkownika w polach tekstowych,
+     * w których może on dokonać zmiany.
+     * @param location adres URL okna.
+     * @param resources źródło pozwalające na uruchomienie okna z innej klasy (na przykład testującej)
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         UserService userService = new UserService();

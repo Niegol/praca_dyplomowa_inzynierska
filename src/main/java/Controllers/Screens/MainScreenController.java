@@ -25,6 +25,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Klasa odpowiedzialna za kontrolowanie głównego okna aplikacji
+ */
 public class MainScreenController{
     private static final String pathToLoginScreen = "/FXMLFiles/LoginScreen.fxml";
     private static final String pathToUserSettings = "/FXMLFiles/UserSettings.fxml";
@@ -203,7 +206,10 @@ public class MainScreenController{
     private RoomReservationService roomReservationService;
 
 
-
+    /**
+     * Metoda przypisana do przycisku showButton. Odpowiada za wyświetlenie rezerwacji na zadanym przez użytkownika
+     * zakresie dat. Jeżeli wprowadzi on niepoprawne dane zostanie wyświetlony odpowiedni komunikat.
+     */
     @FXML
     public void showAction(){
         if(this.checkInDatePicker.getValue() != null & this.checkOutDatePicker.getValue() != null) {
@@ -224,12 +230,19 @@ public class MainScreenController{
     }
 
 
+    /**
+     * Metoda kończąca pracę aplikacji. Przpisana jest do przycisku closeButton.
+     */
     @FXML
     public void closeAction(){
         DialogsUtils dialogsUtils = new DialogsUtils();
         dialogsUtils.closeApplication();
     }
 
+    /**
+     * Metoda wylogowania użytkownika z aplikacji. Zamyka okno główne metodą close() oraz otwiera okno logowania.
+     * Przypisana jest do przycisku logoutButton.
+     */
     @FXML
     public void logoutAction(){
         UserService userService = new UserService();
@@ -238,6 +251,9 @@ public class MainScreenController{
         close();
     }
 
+    /**
+     * Metoda zamykająca okno główne aplikacji.
+     */
     @FXML
     public void close(){
         Stage stage = (Stage) logoutButton.getScene().getWindow();
@@ -249,16 +265,25 @@ public class MainScreenController{
 
     }
 
+    /**
+     * Metoda odpowiedzialna za wyświetlenie okna zarządzania klientami. Przypisana jest do przycisku showCustomer.
+     */
     @FXML
     public void actionShowAll(){
         ScreenShowBorderPane borderPane = new ScreenShowBorderPane(pathToAllCustomersScreen, titleOfAllCustomersScreen, resizableAllCustomersScreen);
     }
 
+    /**
+     * Metoda otwierająca zarządzanie informacjami użytkownika. Przypisana jest do przycisku buttonSettings.
+     */
     @FXML
     public void actionSettings(){
         ScreenShowAnchorPane anchorPane = new ScreenShowAnchorPane(pathToUserSettings, titleOfUserSettings,resizableEditUserScreen);
     }
 
+    /**
+     * Metoda, która zapełnia pola tekstowe po wybraniu odpowiedniego klienta z listy należącej do customersBox.
+     */
     @FXML
     public void actionSetTextFields(){
         this.customerService.setCustomer(customersBox.getSelectionModel().getSelectedItem()); //ustawia klienta jako element z kombo boxa
@@ -278,6 +303,11 @@ public class MainScreenController{
         }
     }
 
+    /**
+     * Metoda uruchamiana od razu przy starcie okna. Metoda domyślnie wyświetla rezerwacje od obecnegodnia, do 10 dni w
+     * przód. Sprawdza czy zalogowany do systemu użytkownik posiada status admina. Jeżeli tak, to posiada wszystkie
+     * możliwości sytemowe.
+     */
     public void initialize() {
         UserService userService = new UserService();
         labelUser.setText(userService.getUserNick());
@@ -293,6 +323,11 @@ public class MainScreenController{
         this.customerService.init();
         this.customersBox.setItems(this.customerService.getCustomerList());
     }
+
+    /**
+     * Metoda uzupełnia kolorami listę colors, dzięki czemu możliwe jest wyświetlanie rezerwacji w wielu kolorach, dzięki
+     * czemu aplikacja jest czytelniejsza.
+     */
     public void setColors(){
         colors.add("lightgreen");
         colors.add("aqua");
@@ -304,6 +339,13 @@ public class MainScreenController{
 
     }
 
+    /**
+     * Metoda odpowiedzialna za wyświetlanie rezerwacji na zadanym zakresie. Jeżeli jest on błędny wówczas akcja nie
+     * nastąpi. Metoda tworzy hashmapę zawierającą informację o kliencie, który na zadanym zakresie dat ma przypisaną
+     * rezerwację oraz o kolorze wszystkich jego rezerwacji.
+     * @param low data od której mają zostać wyświetlone rezerwacje.
+     * @param high data do której mają zostać wyświetlone rezerwacjie.
+     */
     public void getAllRoomsForTableViev(LocalDate low, LocalDate high){
         Map<String, String> colorsMap = new HashMap<>();
         this.pavAfloor0.getChildren().clear();
@@ -434,6 +476,10 @@ public class MainScreenController{
 
     }
 
+    /**
+     * Metoda odpowiadająca za zmianę iteratora odpowiedzialnego za przypisywanie kolorów do danej rezerwacji.
+     * @return zwraca kolejny kolor do przypisania dla klienta.
+     */
     private String getNextColor(){
         if (this.colorIterator < this.colors.size()){
             return this.colors.get(this.colorIterator++);
@@ -443,6 +489,11 @@ public class MainScreenController{
         }
     }
 
+    /**
+     * Metoda, która przypisuje własność wyświetlania danych rezerwacji po kliknięciu na komórkę, która jest zarezerwowana
+     * @param tex1 pole tekstowe do którego ma zostać wstrzyknięta funkcjonalność.
+     * @param finalSet rezerwacja, której informacja zostanie wyświetlona po naciśnięciu na odpowiednie pole.
+     */
     public void addMouseClickedEvent(TextField tex1, RoomReservationFX finalSet) {
         tex1.setOnMouseClicked(event -> DialogsUtils.communicat(String.valueOf(
                 "Rezerwation Id: " + finalSet.getReservationFX().getId() +
@@ -458,25 +509,39 @@ public class MainScreenController{
     }
 
 
+    /**
+     * Metoda odpowiedzialna za wypełnianie kolorem komórek odpowiedzialnych za wyświetlanie informacji o dostępności
+     * danego pokoju. Jeżeli wprowadzone pole tekstowe jest puste nie nastąpi wypełnienie. Dodatkowo obramowania pól
+     * tekstowych zostają ustawione na czarne.
+     * @param tex pole tekstowe na którym możliwe jest ustawienie koloru.
+     * @param color kolor, na jaki ma być wypełnione wprowadzone pole tekstowe jeżeli istnieje taka możliwość.
+     */
     public void setTextFields(TextField tex, String color) {
         if(!tex.getText().isEmpty())
             tex.setStyle("-fx-background-color: "+color+"; -fx-border-color: black");
 
         else
             tex.setStyle("-fx-border-color: black");
-
     }
 
+    /**
+     * Metoda odpowiedzialna za wyświetlanie okna Rezerwacji.
+     */
     public void showReservationsAction(){
         ScreenShowBorderPane borderPane = new ScreenShowBorderPane(pathToAllReservationsScreen, getTitleOfAllReservationsScreen, resizableAllReservationsScreen);
 
     }
 
+    /**
+     * Metoda użyta na customersComboBox. Dzięki niej od razu po naciśnięciu wyświetlani będą aktualni klienci.
+     */
     public void onMouseClicked() {
         this.customerService.init();
     }
 
-
+    /**
+     * Metoda odpowiedzialna za wyświetlanie okna historii rezerwacji.
+     */
     public void showHistoryAction() {
         ScreenShowBorderPane borderPan = new ScreenShowBorderPane(pathToDeletedReservations, titleOfDeletedReservations, resizableDeletedReservations);
     }

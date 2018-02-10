@@ -5,6 +5,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Klasa odpowiadająca klasie modelu Customer. Jest jego widokową reprezentacją. Posiada argumenty, których możliwe
+ * jest wyświtlanie w oknach JavaFX oraz gettery i settery.
+ */
 public class CustomerFX {
     private IntegerProperty id = new SimpleIntegerProperty();
     private StringProperty name = new SimpleStringProperty();

@@ -3,6 +3,10 @@ package Controllers.DataBase.FXModels;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
+/**
+ * Klasa odpowiadająca klasie modelu RoomReservation. Jest jego widokową reprezentacją. Posiada argumenty, których
+ * możliwe jest wyświtlanie w oknach JavaFX oraz gettery i settery.
+ */
 public class RoomReservationFX {
     private IntegerProperty id = new SimpleIntegerProperty();
     private ReservationFX reservationFX;

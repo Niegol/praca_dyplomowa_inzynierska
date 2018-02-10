@@ -2,6 +2,10 @@ package Controllers.DataBase.FXModels;
 
 import javafx.beans.property.*;
 
+/**
+ * Klasa odpowiadająca klasie modelu History. Jest jego widokową reprezentacją. Posiada argumenty, których możliwe
+ * jest wyświtlanie w oknach JavaFX oraz gettery i settery.
+ */
 public class HistoryFX {
     private IntegerProperty id = new SimpleIntegerProperty();
     private StringProperty customerSurname = new SimpleStringProperty();

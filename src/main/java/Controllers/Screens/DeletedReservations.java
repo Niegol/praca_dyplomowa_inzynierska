@@ -7,6 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+/**
+ * Klasa kontrolująca okno odpowiedzialne za wyświetlanie historii rezerwacji.
+ */
 public class DeletedReservations {
 
 
@@ -38,8 +41,9 @@ public class DeletedReservations {
     private HistoryService historyService;
 
 
-
-
+    /**
+     * Metoda uruchamiana od razu przy otwarciu okna. Inicjalizuje ona wszystkie usunięte rezerwacje w TableView.
+     */
     @FXML
     private void initialize(){
         this.historyService = new HistoryService();

@@ -7,8 +7,17 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+/**
+ * Klasa odpowiedzialna za wyświetlanie okien aplikacji zbudowanych w kontenerze AnchorPane
+ */
 public class ScreenShowAnchorPane {
 
+    /**
+     * Konstruktor wyświetla okno odrazu po inicjalizacji
+     * @param path ścieżka do pliku fxml, który ma zostać otworzony
+     * @param screenTitle tytuł okna, które ma zostać wyświetlone
+     * @param resizable przyjmuje wartość true/false czy okno może mieć zmienianą wielkość jeżeli podana została błędna ścieżka zostanie obsłużony wyjątek i wyświetlone zostanie komunikat
+     */
     public ScreenShowAnchorPane(String path, String screenTitle, Boolean resizable){
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource(path));
 

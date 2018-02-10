@@ -3,7 +3,16 @@ package Controllers.DataBase.Converters;
 import Controllers.DataBase.FXModels.ReservationFX;
 import Controllers.DataBase.models.Reservation;
 
+/**
+ * Klasa umożliwiająca obustronne konwertowanie obiektów bazodanowych klasy Reservation na obiekty ReservationFX będące ich reprezentacją
+ * w oknie aplikacji
+ */
 public class ReservationConverter {
+    /**
+     * Konwertuje obiekt widoku na model bazodanowy
+     * @param reservationFX obiekt widoku klasy ReservationFX
+     * @return model bazodanowy klasy Resevation
+     */
     public static Reservation convertToReservation(ReservationFX reservationFX){
         Reservation reservation = new Reservation();
         reservation.setIdReservation(reservationFX.getId());
@@ -20,6 +29,11 @@ public class ReservationConverter {
         return reservation;
     }
 
+    /**
+     * Konwertuje model bazodanowy na obiekt widokowy
+     * @param reservation model bazodanowy klasy Reservation
+     * @return obiekt widoku klasy ResevationFX
+     */
     public static ReservationFX convertToReservationFX(Reservation reservation){
         ReservationFX reservationFX = new ReservationFX();
         reservationFX.setId(reservation.getIdReservation());

@@ -12,7 +12,9 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
+/**
+ * Klasa kontrolująca okno odpowiedzialne za zarządzanie klientami.
+ */
 public class AllCustomersController implements Initializable{
     @FXML
     private TextField name;
@@ -66,7 +68,12 @@ public class AllCustomersController implements Initializable{
     private CustomerService customerService;
 
 
-
+    /**
+     * Metoda bindująca elementy na ekranie. Każde z pól tekstowych jest zbindowane z obiektem customer klasy
+     * ObejctProperty. Dzięki temu każda wprowadzona lub usunięty znak zostanie nadpisany do danego pola od razu po
+     * wybraniu z klawitury. Funkcja także blokuje przycisk dodawania klienta (Customer) w przypadku, gdy nie są
+     * zapełnione wszystkie wymagane pola.
+     */
     @FXML
     public void initBindings(){
         this.customerService.customerProperty().get().nameProperty().bind(this.name.textProperty());
@@ -83,6 +90,11 @@ public class AllCustomersController implements Initializable{
         );
     }
 
+    /**
+     * Metoda wywołująca akcję saveInDB() odpowedzialną za zapis klienta (Customer) do bazy danych. Następnie jeżeli
+     * metoda saveInDB() pozwoli na zapis, aktualizowana jest aktualna lista klientów. Dzięki temu od razu po dodaniu
+     * klienta jest on widziany w tabeli wyświetlającej wszystkich klientów. Następnie czyszczone są wszystkie pola.
+     */
     @FXML
     public void actionAdd(){
 
@@ -101,6 +113,11 @@ public class AllCustomersController implements Initializable{
     public void onEditCommitId(TableColumn.CellEditEvent<CustomerFX, Number> customerFXNumberCellEditEvent) {
     }
 
+    /**
+     * Metoda edytująca imię klienta. Metoda saveInDB() zapisuje zmianę jeżeli wprowadzona informacja jest zgodna
+     * ze wzorcem. Następnie inicjalizowana jest lista wszystkich klientów ze zaktualizowanymi danymi.
+     * @param customerFXStringCellEditEvent klient ze zmienionymi danymi.
+     */
     @FXML
     public void onEditCommitName(TableColumn.CellEditEvent<CustomerFX, String> customerFXStringCellEditEvent) {
         this.customerService.getCustomerEdit().setName(customerFXStringCellEditEvent.getNewValue());
@@ -109,6 +126,11 @@ public class AllCustomersController implements Initializable{
 
     }
 
+    /**
+     * Metoda edytująca nazwisko klienta. Metoda saveInDB() zapisuje zmianę jeżeli wprowadzona informacja jest zgodna
+     * ze wzorcem. Następnie inicjalizowana jest lista wszystkich klientów ze zaktualizowanymi danymi.
+     * @param customerFXStringCellEditEvent klient ze zmienionym nazwiskiem.
+     */
     @FXML
     public void onEditCommitSurname(TableColumn.CellEditEvent<CustomerFX, String> customerFXStringCellEditEvent) {
         this.customerService.getCustomerEdit().setSurname(customerFXStringCellEditEvent.getNewValue());
@@ -117,6 +139,11 @@ public class AllCustomersController implements Initializable{
 
     }
 
+    /**
+     * Metoda edytująca numer telefony klienta. Metoda saveInDB() zapisuje zmianę jeżeli wprowadzona informacja jest zgodna
+     * ze wzorcem. Następnie inicjalizowana jest lista wszystkich klientów ze zaktualizowanymi danymi.
+     * @param customerFXNumberCellEditEvent klient ze zmienionym numerem telefonu.
+     */
     @FXML
     public void onEditCommitPhone(TableColumn.CellEditEvent<CustomerFX, Number> customerFXNumberCellEditEvent) {
         this.customerService.getCustomerEdit().setPhone(String.valueOf(customerFXNumberCellEditEvent.getNewValue()));
@@ -125,6 +152,11 @@ public class AllCustomersController implements Initializable{
 
     }
 
+    /**
+     * Metoda edytująca adres email klienta. Metoda saveInDB() zapisuje zmianę jeżeli wprowadzona informacja jest zgodna
+     * ze wzorcem. Następnie inicjalizowana jest lista wszystkich klientów ze zaktualizowanymi danymi.
+     * @param customerFXStringCellEditEvent klient ze zmienionym adresem email.
+     */
     @FXML
     public void onEditCommitEmail(TableColumn.CellEditEvent<CustomerFX, String> customerFXStringCellEditEvent) {
         this.customerService.getCustomerEdit().setEmail(customerFXStringCellEditEvent.getNewValue());
@@ -132,6 +164,11 @@ public class AllCustomersController implements Initializable{
         this.customerService.init();
     }
 
+    /**
+     * Metoda edytująca NIP klienta. Metoda saveInDB() zapisuje zmianę jeżeli wprowadzona informacja jest zgodna
+     * ze wzorcem. Następnie inicjalizowana jest lista wszystkich klientów ze zaktualizowanymi danymi.
+     * @param customerFXNumberCellEditEvent klient ze zmienionym numerem NIP.
+     */
     @FXML
     public void onEditCommitNip(TableColumn.CellEditEvent<CustomerFX, Number> customerFXNumberCellEditEvent) {
         try {
@@ -142,6 +179,11 @@ public class AllCustomersController implements Initializable{
         }
     }
 
+    /**
+     * Metoda edytująca nazwę firmy klienta. Następnie inicjalizowana jest lista wszystkich klientów ze zaktualizowanymi
+     * danymi.
+     * @param customerFXStringCellEditEvent klient ze zmienioną nazwą firmy.
+     */
     @FXML
     public void onEditCommitCompany(TableColumn.CellEditEvent<CustomerFX, String> customerFXStringCellEditEvent) {
         this.customerService.getCustomerEdit().setCompany(customerFXStringCellEditEvent.getNewValue());
@@ -149,6 +191,9 @@ public class AllCustomersController implements Initializable{
     }
 
 
+    /**
+     * Metoda usuwająca klienta z bazy oraz z okna aplikacji.
+     */
     public void deleteOnAction() {
         this.customerService.deleteInDB();
     }
@@ -186,6 +231,13 @@ public class AllCustomersController implements Initializable{
         this.customerService = customerService;
     }
 
+    /**
+     * Metoda wykonująca się na początku otworzenia okna aplikacji. Zapełnia ona dane w TableView, wywołuje metodę
+     * bindującą initBindings() oraz dzięki funkcji setCellFactory() powoduje, że każdą komurkę wyświetlanego klienta
+     * można edytować (oprócz numeru Id).
+     * @param location adres URL pliku fxml ze ścieżką do okna.
+     * @param resources źródło. Umożliwia odwołanie się do okna z innego otwartego.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.customerService = new CustomerService();

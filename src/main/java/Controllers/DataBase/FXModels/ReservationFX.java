@@ -2,6 +2,10 @@ package Controllers.DataBase.FXModels;
 
 import javafx.beans.property.*;
 
+/**
+ * Klasa odpowiadająca klasie modelu Reservation. Jest jego widokową reprezentacją. Posiada argumenty, których możliwe
+ * jest wyświtlanie w oknach JavaFX, gettery i settery.
+ */
 public class ReservationFX {
     private IntegerProperty id = new SimpleIntegerProperty();
     private ObjectProperty<CustomerFX> customerFX = new SimpleObjectProperty<>();

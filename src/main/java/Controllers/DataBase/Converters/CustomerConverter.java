@@ -5,8 +5,17 @@ import Controllers.DataBase.FXModels.CustomerFX;
 import Controllers.DataBase.models.Customer;
 import com.j256.ormlite.stmt.query.In;
 
+/**
+ * Klasa umożliwiająca obustronne konwertowanie obiektów bazodanowych klasy Customer na obiekty CustomerFX będące ich reprezentacją
+ * w oknie aplikacji
+ */
 public class CustomerConverter {
 
+    /**
+     * Konwersja z obiektu CustomerFX na Customer
+     * @param customerFX model widoku klasy CustomerFX
+     * @return model bazodanowy klasy Customer
+     */
     public static Customer convertToCustomer(CustomerFX customerFX){
         Customer customer = new Customer();
         customer.setIdCustomer(customerFX.getId());
@@ -24,6 +33,11 @@ public class CustomerConverter {
         return customer;
     }
 
+    /**
+     * Konwersja z obiektu Customer na CustomerFX
+     * @param customer model bazodanowy klasy Customer
+     * @return model widoku klasy CustomerFX
+     */
     public static CustomerFX conertToCustomerFX(Customer customer){
         CustomerFX customerFX = new CustomerFX();
         customerFX.setId(customer.getIdCustomer());

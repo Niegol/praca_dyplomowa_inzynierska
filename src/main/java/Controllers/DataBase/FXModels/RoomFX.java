@@ -5,6 +5,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Klasa odpowiadająca klasie modelu Room. Jest jego widokową reprezentacją. Posiada argumenty, których możliwe
+ * jest wyświtlanie w oknach JavaFX oraz gettery i settery.
+ */
 public class RoomFX {
     IntegerProperty id = new SimpleIntegerProperty();
     StringProperty roomNumber = new SimpleStringProperty();

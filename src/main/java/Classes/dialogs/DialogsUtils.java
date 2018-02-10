@@ -7,10 +7,14 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 import java.util.Optional;
 
-//klasa sluzaca do wyswietlania informacji dialogowych
+/**
+ * Jest to klasa odpowiedzialna za wyswietlanie informacji w formie okien dialogowych
+ */
 public class DialogsUtils {
-    //metoda sluzaca do wyswietlenia odpowiednich komunikatow z opcja potwierdzenia lub odrzucenia zmiany
-    //w tym konkretnym przypadku metoda sluzy do potwierdzania wyjscia z aplikacji
+    /**
+     * Metoda statyczna służąca do wyswietlenia odpowiednich komunikatow z opcja potwierdzenia lub odrzucenia zmiany.
+     * @return zwraca wiadomość który z przycisków został wciśnięty
+     */
     public static Optional<ButtonType> confirmationDialog(){
         Alert confirmationDialog = new Alert(Alert.AlertType.CONFIRMATION); //inicjalizacja alertu potwierdzenia
         confirmationDialog.setTitle("Exit Confirmation");
@@ -19,7 +23,12 @@ public class DialogsUtils {
         return result;   // zwroc okno                                    czyli wcisniecie odpowiedniego przycisku
     }
 
-    //metoda wyswietlajaca informacje o wyzucanych wyjatkach
+    //
+
+    /**
+     * Wyswietlaja informacje o wyzucanych wyjatkach. Po wyświetleniu czeka na potwierdze klaiwszem "OK"
+     * @param error informacja o błędzie
+     */
     public static void errorDialog(String error){
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);  //inicjalizacja okna zawierajacego informacje o bledach
         errorAlert.setTitle("ATTENTION!!!");
@@ -30,6 +39,10 @@ public class DialogsUtils {
         errorAlert.showAndWait();
     }
 
+    /**
+     * Wyświetla na ekranie komunikat
+     * @param communicat treść komunikatu
+     */
     public static void communicat(String communicat){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("INFORMATIN");
@@ -39,6 +52,10 @@ public class DialogsUtils {
         alert.showAndWait();
     }
 
+
+    /**
+     * Odpowiada za komunikat zamykający okno, przyjmuje wartość @confirmationDialog()
+     */
     public static void closeApplication(){
         Optional<ButtonType> result = confirmationDialog();
         if (result.get()== ButtonType.OK){
