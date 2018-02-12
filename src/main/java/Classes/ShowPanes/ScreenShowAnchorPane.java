@@ -13,10 +13,11 @@ import java.io.IOException;
 public class ScreenShowAnchorPane {
 
     /**
-     * Konstruktor wyświetla okno odrazu po inicjalizacji
+     * Konstruktor wyświetla okno odrazu po inicjalizacji. Jeżeli podana została błędna ścieżka zostanie obsłużony wyjątek
+     * i wyświetlone zostanie komunikat
      * @param path ścieżka do pliku fxml, który ma zostać otworzony
      * @param screenTitle tytuł okna, które ma zostać wyświetlone
-     * @param resizable przyjmuje wartość true/false czy okno może mieć zmienianą wielkość jeżeli podana została błędna ścieżka zostanie obsłużony wyjątek i wyświetlone zostanie komunikat
+     * @param resizable przyjmuje wartość true/false czy okno może mieć zmienianą wielkość
      */
     public ScreenShowAnchorPane(String path, String screenTitle, Boolean resizable){
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource(path));
